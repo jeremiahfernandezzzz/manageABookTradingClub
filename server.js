@@ -15,7 +15,7 @@ app.use(express.static('public'));
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
-
+app.set('view engine', 'jade');
 app.get("/books/:qwe", function(request,response){
   var books = require('google-books-search');
 
