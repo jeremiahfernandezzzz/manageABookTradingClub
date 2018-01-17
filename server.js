@@ -16,6 +16,18 @@ app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
 
+app.get("/books/:qwe", function(request,response){
+  var books = require('google-books-search');
+
+  books.search(request.params.qwe, function(error, results) {
+      if ( ! error ) {
+          response.send(results);
+      } else {
+          console.log(error);
+      }
+  });
+})
+
 app.get("/dreams", function (request, response) {
   response.send(dreams);
 });
