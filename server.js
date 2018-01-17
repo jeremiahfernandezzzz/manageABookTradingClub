@@ -21,8 +21,9 @@ app.get("/books/:qwe", function(request,response){
 
   books.search(request.params.qwe, function(error, results) {
       if ( ! error ) {
-        
-          response.render('books', {results: "asdasd"});
+          //console.log(results)
+          var myMongoDbObject = {name : 'stephen'};
+          response.render('books', { locals: { data : myMongoDbObject } });
       } else {
           console.log(error);
       }
