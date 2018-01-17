@@ -21,7 +21,7 @@ app.get("/books/:qwe", function(request,response){
 
   books.search(request.params.qwe, function(error, results) {
       if ( ! error ) {
-          response.send(results);
+          response.render(__dirname + 'views/books.html', results);
       } else {
           console.log(error);
       }
