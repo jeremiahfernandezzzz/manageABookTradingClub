@@ -1,5 +1,15 @@
-//include books.html
+include books.html
+body
 script.
     var results = !{data}
-    console.log(results)
-    //console.log(results)
+    results.forEach(function(element){
+      var image = document.createElement('img');
+      image.setAttribute('src', element['thumbnail'])
+
+      var book = document.createElement('div');
+      book.setAttribute('class', 'book');
+      book.innerHTML = element['title'];
+
+      book.append(image)
+      document.body.append(image)
+    })
