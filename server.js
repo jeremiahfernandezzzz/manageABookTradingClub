@@ -15,6 +15,9 @@ app.use(express.static('views'));
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/search.html');
 });
+app.get("/newuser", function (request, response) {
+  response.sendFile(__dirname + '/views/newuser.html');
+});
 app.set('view engine', 'jade');
 app.get("/search", function(request,response){
   var books = require('google-books-search');
