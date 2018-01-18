@@ -15,12 +15,44 @@ var bodyParser = require('body-parser');
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('views'));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/search.html');
 });
+
 app.get("/newuser", function (request, response) {
   response.sendFile(__dirname + '/views/newuser.html');
+});
+
+app.get("/signin", function (request, response) {
+  response.sendFile(__dirname + '/views/signin.html');
+});
+
+app.post("/signin", function (request, response) {
+  MongoClient.connect(url, function(err, db){
+    if (db){
+        console.log("connected to " + url);
+        db.collection("bookclub_users").find({'username' : request.body.username}).toArray().then(element => {
+        if (element == "") {
+          response.send("user not found")
+        } else {
+          db.collection("bookclub_users").find({'password' : request.body.password}).toArray().then(element => {
+            if (element == "") {
+              response.send("wrong password")
+            } else {
+              response.send("logged in")
+            }
+          })
+        }
+      })
+    }
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
 });
 
 app.post("/newuser", function (request, response) {
