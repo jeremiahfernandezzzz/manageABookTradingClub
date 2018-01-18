@@ -8,6 +8,7 @@ var mongodb = require("mongodb")
 var MongoClient = mongodb.MongoClient;
 var url = process.env.DB_URL;
 var bodyParser = require('body-parser');
+var session = require('express-session')
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -18,9 +19,15 @@ app.use(express.static('views'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use(session({
+  secret: 'work hard',
+  resave: true,
+  saveUninitialized: false
+}));
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/search.html');
+  console.log(request.body)
 });
 
 app.get("/newuser", function (request, response) {
