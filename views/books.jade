@@ -3,33 +3,20 @@ body
 script.
     var results = !{data}
     results.forEach(function(element){
-      var image = document.createElement('img');
-      image.setAttribute('src', element['thumbnail'])
-      
-      var title = document.createTextNode(element['title']);
-      
-      var book = document.createElement('div');
-      book.setAttribute('class', 'book');
-      //book.innerHTML = element['title'];
-      book.setAttribute('style', 'position: relative; width: 200px; float: left; text-align: center')
-    
-      book.append(image)
-      book.append(title)
-      document.body.append(book)
-      
 
       var result =  document.createElement("a");
       var image = document.createElement("img");
-      var name = document.createTextNode(element["name"] + "  |  " + element["goers"] + " going");
+      var name = document.createTextNode(element["title"]);
       //var text = document.createTextNode("blahblahblah");
 
-      image.setAttribute("src", element["image"]);
-      image.setAttribute("style", "position:relative;height:100px;float:left;padding:10px;")
+      image.setAttribute("src", element["thumbnail"]);
+      image.setAttribute("style", "position:relative;height:120px;float:left;padding:10px;")
       result.setAttribute("class", "button special");
-      result.setAttribute("style", "width:100%;height:100%");
-      if (element["going"] == false) {
-        result.setAttribute("class", "button special");
-      } else {
-        result.setAttribute("class", "button");
-      }
+      result.setAttribute("style", "width:30%;height:100%;text-align: left");
+      
+      result.append(name);
+      //result.append(text);
+      result.append(image);
+      document.querySelector("#results").append(result)
+      document.querySelector("#results").append(document.createTextNode("  "))
     })

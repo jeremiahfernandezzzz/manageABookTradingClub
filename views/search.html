@@ -53,44 +53,4 @@
 
 
 <script>
-  var req = new XMLHttpRequest();
-  req.open('GET', document.location, false);
-  req.send(null);
-  
-  var bus = JSON.parse(req.getResponseHeader("bus"));
-  var userId = req.getResponseHeader("userId");
-  
-  if (userId == "" || !userId) {
-    document.querySelector("#signIn").innerHTML = "Sign In"
-  } else {
-    document.querySelector("#signIn").innerHTML = "Sign Out"
-    document.querySelector("#signIn").setAttribute("href", "/logout")
-  }
-  
-  bus.forEach(function(element){
-    var result =  document.createElement("a");
-    var image = document.createElement("img");
-    var name = document.createTextNode(element["name"] + "  |  " + element["goers"] + " going");
-    //var text = document.createTextNode("blahblahblah");
-    
-    image.setAttribute("src", element["image"]);
-    image.setAttribute("style", "position:relative;height:100px;float:left;padding:10px;")
-    result.setAttribute("class", "button special");
-    result.setAttribute("style", "width:100%;height:100%");
-    if (element["going"] == false) {
-      result.setAttribute("class", "button special");
-    } else {
-      result.setAttribute("class", "button");
-    }
-    
-    //result.setAttribute("style", "color:red");
-    //result.innerHTML = element["name"] + "  |  " + element["goers"] + " going";
-    result.setAttribute("href", "go/" + element["id"]);
-  //alert(req.getResponseHeader("bus"));
-    result.append(name);
-    //result.append(text);
-    result.append(image);
-    document.querySelector("#results").append(result)
-    document.querySelector("#results").append(document.createElement("hr"))
-  })
 </script>
