@@ -20,8 +20,9 @@ app.get("/search", function(request,response){
   var books = require('google-books-search');
 
   books.search(request.query.qwe, function(error, results) {
+    //console.log(JSON.stringify(results))
       if ( ! error ) {
-          response.render('books', { data : JSON.stringify(results) });
+          response.render('search', { data : JSON.stringify(results) });
       } else {
           console.log(error);
       }
