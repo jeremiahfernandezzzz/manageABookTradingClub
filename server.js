@@ -20,6 +20,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(session({
+  cookie: {
+    path    : '/login',
+    httpOnly: false,
+    maxAge  : 24*60*60*1000
+  },
   secret: 'work hard',
   resave: true,
   saveUninitialized: false
@@ -27,7 +32,7 @@ app.use(session({
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/search.html');
-  console.log(request.body)
+  console.log(request.session.user)
 });
 
 app.get("/newuser", function (request, response) {
@@ -51,6 +56,7 @@ app.post("/signin", function (request, response) {
               response.send("wrong password")
             } else {
               response.send("logged in")
+              request.session.user = request.body.username
             }
           })
         }
