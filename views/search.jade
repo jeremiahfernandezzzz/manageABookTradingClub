@@ -4,9 +4,10 @@ script.
     var results = !{data}
     results.forEach(function(element){
       var result = document.createElement("div");
-      result.setAttribute("style", "width: 50%; float:left; border: medium dashed gray; padding: 10px; color: white");
+      result.setAttribute("style", "float:left; border: medium dashed gray; margin: 5px;padding: 10px; color: white");
       var image = document.createElement("img");
       var title = document.createElement("h2");
+      title.setAttribute("style", "color: white");
       var name = document.createTextNode(element["title"]);
       var authors = document.createTextNode(element["authors"]);
       //var text = document.createTextNode("blahblahblah");
