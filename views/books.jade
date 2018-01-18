@@ -5,11 +5,15 @@ script.
     results.forEach(function(element){
       var image = document.createElement('img');
       image.setAttribute('src', element['thumbnail'])
-
+      
+      var title = document.createTextNode(element['title']);
+      
       var book = document.createElement('div');
       book.setAttribute('class', 'book');
-      book.innerHTML = element['title'];
-
+      //book.innerHTML = element['title'];
+      book.setAttribute('style', 'position: relative; width: 200px; float: left; text-align: top')
+    
       book.append(image)
-      document.body.append(image)
+      book.append(title)
+      document.body.append(book)
     })
