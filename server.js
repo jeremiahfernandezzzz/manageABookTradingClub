@@ -7,6 +7,7 @@ var app = express();
 var mongodb = require("mongodb")
 var MongoClient = mongodb.MongoClient;
 var url = process.env.DB_URL;
+var bodyParser = require('body-parser');
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -23,19 +24,19 @@ app.get("/newuser", function (request, response) {
 });
 
 app.post("/newuser", function (request, response) {
+  console.log(request.body)
   MongoClient.connect(url, function(err, db){
     if (db){
           console.log("connected to " + url);
-          db.collection("polls").find({'username' : request.body.username}).toArray().then(element => {
+          db.collection("bookclub_users").find({'username' : request.body.username}).toArray().then(element => {
         if (element == "") {
-          user = {
+          var user = {
             username: request.body.username,
             password: request.body.password,
-            location: request.body.password,
-            password: request.body.password,
-            
+            location: request.body.location,
+            name: request.body.name,
           }
-          db.collection("bookclub_user").insert(user);
+          db.collection("bookclub_users").insert(user);
           response.redirect("/");
         } else {
           response.send("username already taken")
