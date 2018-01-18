@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(session({
   cookie: {
-    path    : '/signin',
+    path    : '/',
     httpOnly: false,
     maxAge  : 24*60*60*1000
   },
@@ -33,7 +33,7 @@ app.use(session({
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/search.html');
   if (request.session){
-    console.log("asd" + request.session.user)
+    console.log("asd " + request.sessionf)
   }
 });
 
@@ -57,11 +57,9 @@ app.post("/signin", function (request, response) {
             if (element == "") {
               response.send("wrong password")
             } else {
-              //response.send("logged in")
+              response.send("logged in")
               request.session.user = request.body.username
-              request.session.save(function(err){
-                response.redirect("/")
-              })
+              request.session.save()
             }
           })
         }
