@@ -4,6 +4,9 @@
 // init project
 var express = require('express');
 var app = express();
+var mongodb = require("mongodb")
+var MongoClient = mongodb.MongoClient;
+var url = process.env.DB_URL;
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -18,7 +21,34 @@ app.get("/", function (request, response) {
 app.get("/newuser", function (request, response) {
   response.sendFile(__dirname + '/views/newuser.html');
 });
+
+app.post("/newuser", function (request, response) {
+  MongoClient.connect(url, function(err, db){
+    if (db){
+          console.log("connected to " + url);
+          db.collection("polls").find({'username' : request.body.username}).toArray().then(element => {
+        if (element == "") {
+          user = {
+            username: request.body.username,
+            password: request.body.password,
+            location: request.body.password,
+            password: request.body.password,
+            
+          }
+          db.collection("bookclub_user").insert(user);
+          response.redirect("/");
+        } else {
+          response.send("username already taken")
+        }
+      })
+    }
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
+});
 app.set('view engine', 'jade');
+
 app.get("/search", function(request,response){
   var books = require('google-books-search');
 
