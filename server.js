@@ -16,10 +16,10 @@ app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/search.html');
 });
 app.set('view engine', 'jade');
-app.get("/books/:qwe", function(request,response){
+app.get("/search", function(request,response){
   var books = require('google-books-search');
 
-  books.search(request.params.qwe, function(error, results) {
+  books.search(request.query.qwe, function(error, results) {
       if ( ! error ) {
           response.render('books', { data : JSON.stringify(results) });
       } else {

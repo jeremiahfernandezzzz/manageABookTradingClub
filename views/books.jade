@@ -10,13 +10,13 @@ script.
       //var text = document.createTextNode("blahblahblah");
 
       image.setAttribute("src", element["thumbnail"]);
-      image.setAttribute("style", "position:relative;height:120px;float:left;padding:10px;")
+      image.setAttribute("style", "position:relative;height:150px;float:left;padding:10px;")
       result.setAttribute("class", "button special");
-      result.setAttribute("style", "width:30%;height:100%;text-align: left");
+      result.setAttribute("style", "width:100%;height:100%;text-align: left");
       
       result.append(name);
       //result.append(text);
       result.append(image);
       document.querySelector("#results").append(result)
-      document.querySelector("#results").append(document.createTextNode("  "))
+      document.querySelector("#results").append(document.createElement("hr"))
     })
