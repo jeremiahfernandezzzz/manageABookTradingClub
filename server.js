@@ -33,7 +33,7 @@ app.use(session({
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/search.html');
   if (request.session){
-    console.log("asd " + request.sessionf)
+    console.log("asd " + JSON.stringify(request.session))
   }
 });
 
@@ -59,7 +59,9 @@ app.post("/signin", function (request, response) {
             } else {
               response.send("logged in")
               request.session.user = request.body.username
-              request.session.save()
+              request.session.save(
+                console.log("zxc" + JSON.stringify(request.session))
+              )
             }
           })
         }
