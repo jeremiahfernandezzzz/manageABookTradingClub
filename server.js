@@ -296,7 +296,7 @@ app.get("/mybooks", function(request,response){
 app.get("/requests", function(request,response){
   MongoClient.connect(url, function(err, db){
     if (db){
-        db.collection("bookclub_books").find({user: request.session.user, request: {$exists:true}},{_id:0}).toArray().then(added_books => {
+        db.collection("bookclub_books").find({user: request.session.user, request: {$ne:null}},{_id:0}).toArray().then(added_books => {
             var data = []
             added_books.forEach(function(element){
               var added = false;
@@ -326,6 +326,28 @@ app.get("/requests", function(request,response){
 
 app.post("/requests", function(request,response){
   console.log(request.body)
+  var book = {
+    'title' : request.body["title"],
+    'subtitle' : request.body["subtitle"],
+    'thumbnail' : request.body["thumbnail"],
+    'authors' : request.body["authors"], 
+    'user': request.body["user"]
+  }
+  MongoClient.connect(url, function(err, db){
+    if (db){
+      db.collection("bookclub_books").update(book, {
+        'title' : request.body["title"],
+        'subtitle' : request.body["subtitle"],
+        'thumbnail' : request.body["thumbnail"],
+        'authors' : request.body["authors"], 
+        'user': request.body["request"],
+        'request': null
+      });
+    }
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
 })
 
 
