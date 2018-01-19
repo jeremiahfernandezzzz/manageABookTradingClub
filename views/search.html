@@ -37,7 +37,7 @@
 			<section id="one" class="wrapper style3 special">
 				<div class="container 50%">
 					<header class="major">
-						<h2>search for a book</h2>
+						<h2 id="search">look a book up</h2>
               <form action="/search" method="get">
               <div class="12u$(small)">
                 <input type="text" id="mySearch" name="qwe">
@@ -53,8 +53,20 @@
 
 
 <script>
-  if(document.cookie){
+  if(JSON.parse(document.cookie).user){
+    document.querySelector("#search").innerHTML = "wassup, " + JSON.parse(document.cookie).user
     document.querySelector("#signIn").innerHTML = "Sign Out"
     document.querySelector("#signIn").setAttribute("href", "/signout")
+  }else {
+    
+    var signup = document.createElement("a");
+    signup.setAttribute("id", "signup");
+    signup.setAttribute("class", "button special");
+    signup.innerHTML = "Sign Up";
+    signup.setAttribute("href", "/signup");
+    
+    var li = document.createElement("li");
+    li.append(signup);
+    document.querySelector("#asd").append(li);
   }
 </script>

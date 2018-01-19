@@ -34,8 +34,12 @@ app.get("/", function (request, response) {
   }
 });
 
-app.get("/newuser", function (request, response) {
-  response.sendFile(__dirname + '/views/newuser.html');
+app.get("/signup", function (request, response) {
+  if(request.session.user){
+    response.redirect("/")
+  }else{
+    response.sendFile(__dirname + '/views/newuser.html');
+  }
 });
 
 app.get("/signin", function (request, response) {
