@@ -197,16 +197,21 @@ app.get("/allbooks", function(request,response){
   var added_books = [];
   MongoClient.connect(url, function(err, db){
     if (db){
-        db.collection("bookclub_books").find({},{_id:0}).toArray().then(element => {
-            added_books = element
+        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
             var data = []
             added_books.forEach(function(element){
+              var added = false;
+              added_books.forEach(function(added_book){
+                if (added_book["title"] == element["title"]){
+                  added = true
+                }
+              })
               data.push({
                 title: element["title"],
                 subtitle: element["subtitle"],              
-                author: element["author"],
+                author: element["authors"],
                 thumbnail: element["thumbnail"],
-                added: true
+                added: added
               })
             })
             //data
