@@ -35,11 +35,12 @@ script.
           var form = document.createElement("form")
           form.setAttribute("action", "/search")
           form.setAttribute("method", "post")
-
+          
+          var data = [element["title"], element["subtitle"], element["thumbnail"], element["author"]]
           var hidden = document.createElement("input")
           hidden.setAttribute("type", "hidden")
           hidden.setAttribute("name", "title")
-          hidden.setAttribute("value", [element["title"],element["subtitle"],element["thumbnail"],element["author"]])
+          hidden.setAttribute("value", data)
           
           
           if(element["added"] == false) {

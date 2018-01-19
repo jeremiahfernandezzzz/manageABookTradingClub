@@ -167,7 +167,7 @@ app.post("/search", function(request,response){
             'author' : request.body.title[3], 
             'user': request.session.user
           }
-          console.log("book " + book);
+          console.log("book " + JSON.stringify(book));
           db.collection("bookclub_books").find(book).toArray().then(element => {
         if (element == "") {
           db.collection("bookclub_books").insert(book);
