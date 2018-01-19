@@ -116,8 +116,9 @@ app.set('view engine', 'jade');
 
 app.get("/search", function(request,response){
   var books = require('google-books-search');
-  
-  
+  MongoClient.connect(url, function(err, db){
+    if (db){
+      db.collection("bookclub_books").find({}).toArray().then(added_books => {
           books.search(request.query.qwe, function(error, results) {
             console.log(JSON.stringify(results))
               if ( ! error ) {
@@ -125,13 +126,11 @@ app.get("/search", function(request,response){
                   console.log("zxczxczx" + results)
                   results.forEach(function(element){
                     var added = false;
-                    /*
                     added_books.forEach(function(added_book){
                       if (added_book["title"] == element["title"]){
                         added = true
                       }
                     })
-                    */
                     data.push({
                       title: element["title"],
                       subtitle: element["subtitle"],              
@@ -147,6 +146,9 @@ app.get("/search", function(request,response){
                   console.log(error);
               }
           });
+      })
+    }
+  })
   
   MongoClient.connect(url, function(err, db){
     if (db){
@@ -161,15 +163,15 @@ app.get("/search", function(request,response){
 })
 
 app.post("/search", function(request,response){
-  console.log(JSON.stringify(request.body))
+  //console.log(request.body["authors"])
   MongoClient.connect(url, function(err, db){
     if (db){
           var book = {
-            //'title' : data[0],
-            //'subtitle' : data[1],
-            //'thumbnail' : data[2],
-            //'author' : data[3], 
-            //'user': request.session.user
+            'title' : request.body["title"],
+            'subtitle' : request.body["subtitle"],
+            'thumbnail' : request.body["thumbnail"],
+            'authors' : request.body["authors"], 
+            'user': request.session.user
           }
           console.log("book " + JSON.stringify(book));
           db.collection("bookclub_books").find(book).toArray().then(element => {

@@ -50,11 +50,27 @@ script.
           hidden.setAttribute("value", element["title"])
           
           form.append(hidden);
+        
+          var hidden1 = document.createElement("input")
+          hidden1.setAttribute("type", "hidden")
+          hidden1.setAttribute("name", "authors")
+          hidden1.setAttribute("value", element["authors"])
           
-          hidden.setAttribute("name", "authors")
-          hidden.setAttribute("value", element["authors"])
+          form.append(hidden1);
           
-          form.append(hidden);
+          var hidden2 = document.createElement("input")
+          hidden2.setAttribute("type", "hidden")
+          hidden2.setAttribute("name", "subtitle")
+          hidden2.setAttribute("value", element["subtitle"])
+          
+          form.append(hidden2);
+          
+          var hidden3 = document.createElement("input")
+          hidden3.setAttribute("type", "hidden")
+          hidden3.setAttribute("name", "thumbnail")
+          hidden3.setAttribute("value", element["thumbnail"])
+          
+          form.append(hidden3);
           
           
           if(element["added"] == false) {
