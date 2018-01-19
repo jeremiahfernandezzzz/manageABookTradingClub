@@ -193,6 +193,36 @@ app.post("/search", function(request,response){
   })
 })
 
+app.post("/request", function(request,response){
+  //console.log(request.body["authors"])
+  MongoClient.connect(url, function(err, db){
+    if (db){
+          var book = {
+            'title' : request.body["title"],
+            'subtitle' : request.body["subtitle"],
+            'thumbnail' : request.body["thumbnail"],
+            'authors' : request.body["authors"], 
+            'user': request.session.user
+          }
+          console.log("book " + JSON.stringify(book));
+          db.collection("bookclub_books").find(book).toArray().then(element => {
+        if (element == "") {
+          db.collection("bookclub_books").insert(book);
+          response.redirect("/");
+        } else {
+          db.collection("bookclub_books").remove(book);
+          response.redirect("/");
+          //response.send("username already taken")
+        }
+      })
+    }
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
+})
+
+
 app.get("/allbooks", function(request,response){
   var added_books = [];
   MongoClient.connect(url, function(err, db){
