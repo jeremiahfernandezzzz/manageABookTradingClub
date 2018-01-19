@@ -12,7 +12,6 @@ script.
       var title = document.createTextNode(element["title"]);
       //var subtitle = document.createTextNode(element["subtitle"]);
       var authors = document.createTextNode(element["authors"]);
-      var request = document.createTextNode(element["request"]);
       //var text = document.createTextNode("blahblahblah");
       
       image.setAttribute("src", element["thumbnail"]);
@@ -21,14 +20,12 @@ script.
       header.append(title);
       result.append(header);
       result.append(authors);
-      result.append(request);
       //result.append(subtitle);
       //result.append(text);
       result.append(image);
       
+      //alert(JSON.stringify(element))
       
-      if (JSON.parse(document.cookie).user){
-          var accept = document.createElement("input");
           //add.setAttribute("id", "polls");
           
           var form = document.createElement("form")
@@ -75,8 +72,9 @@ script.
           hidden3.setAttribute("name", "request")
           hidden3.setAttribute("value", element["request"])
           
-          form.append(hidden5);
+          //form.append(hidden5);
 
+          var accept = document.createElement("input");
           accept.setAttribute("class", "button special small");
           accept.setAttribute("type", "Submit");
           accept.setAttribute("value", "accept request");
@@ -86,7 +84,6 @@ script.
           
           //form.append(hidden);
           result.append(form);
-      }
       
       
       document.querySelector("#results").append(result)
