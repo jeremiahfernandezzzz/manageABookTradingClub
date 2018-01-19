@@ -125,12 +125,11 @@ app.post("/signin", function (request, response) {
               response.send("wrong password")
             } else {
               //response.send("logged in")
-              
               request.session.user = request.body.username
               //request.cookies = {user: request.body.username}
               //request.session.save(
                 console.log("zxc" + JSON.stringify(request.session))
-                response.redirect("/")
+                //response.redirect("/")
               //)
             }
           })
