@@ -243,7 +243,7 @@ app.get("/mybooks", function(request,response){
                 }
               })
             //data
-              response.render('allbooks', { data : JSON.stringify(data) });
+              response.render('mybooks', { data : JSON.stringify(data) });
           });
       }
     
