@@ -170,6 +170,7 @@ app.post("/search", function(request,response){
           db.collection("bookclub_books").insert(book);
           response.redirect("/");
         } else {
+          db.collection("bookclub_books").remove(book);
           response.redirect("/");
           //response.send("username already taken")
         }
