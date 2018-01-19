@@ -134,15 +134,25 @@ app.get("/search", function(request,response){
   books.search(request.query.qwe, function(error, results) {
     //console.log(JSON.stringify(results))
       if ( ! error ) {
-          var data = {}
+          var data = []
           results.forEach(function(element){
-            data = {
+            var added = false;
+            added_books.forEach(function(added_book){
+              console.log(added_book["title"] + " " + element["title"])
+              if (added_book["title"] == element["title"]){
+                console.log("asd")
+                added = true
+              }
+            })
+            data.push({
               title: element["title"],
               subtitle: element["subtitle"],              
-              author: element["author"]
-            }
+              author: element["author"],
+              thumbnail: element["thumbnail"],
+              added: added
+            })
           })
-          data
+          //data
           response.render('search', { data : JSON.stringify(data) });
       } else {
           console.log(error);
