@@ -119,7 +119,7 @@ app.get("/search", function(request,response){
   
   
           books.search(request.query.qwe, function(error, results) {
-            //console.log(JSON.stringify(results))
+            console.log(JSON.stringify(results))
               if ( ! error ) {
                   var data = []
                   console.log("zxczxczx" + results)
@@ -135,12 +135,13 @@ app.get("/search", function(request,response){
                     data.push({
                       title: element["title"],
                       subtitle: element["subtitle"],              
-                      author: element["author"],
+                      authors: element["authors"],
                       thumbnail: element["thumbnail"],
                       added: added
                     })
+                    //console.log(data)
                   })
-                  console.log("asdasdasd"  + JSON.stringify(data))
+                  
                   response.render('search', { data : JSON.stringify(data) });
               } else {
                   console.log(error);
@@ -160,16 +161,15 @@ app.get("/search", function(request,response){
 })
 
 app.post("/search", function(request,response){
-  console.log(request.body.data.data)
-  var data = request.body.data.data
+  console.log(JSON.stringify(request.body))
   MongoClient.connect(url, function(err, db){
     if (db){
           var book = {
-            'title' : data[0],
-            'subtitle' : data[1],
-            'thumbnail' : data[2],
-            'author' : data[3], 
-            'user': request.session.user
+            //'title' : data[0],
+            //'subtitle' : data[1],
+            //'thumbnail' : data[2],
+            //'author' : data[3], 
+            //'user': request.session.user
           }
           console.log("book " + JSON.stringify(book));
           db.collection("bookclub_books").find(book).toArray().then(element => {

@@ -2,9 +2,10 @@ include search.html
 body
 script.
     var results = !{data}
+    
     results.forEach(function(element){
       
-      
+      console.log(element)
     
       var result = document.createElement("div");
       result.setAttribute("style", "float:left; border: medium dashed gray; margin: 5px;padding: 10px; color: white");
@@ -45,8 +46,15 @@ script.
           
           var hidden = document.createElement("input")
           hidden.setAttribute("type", "hidden")
-          hidden.setAttribute("name", "data")
-          hidden.setAttribute("value", JSON.stringify({data: data}))
+          hidden.setAttribute("name", "title")
+          hidden.setAttribute("value", element["title"])
+          
+          form.append(hidden);
+          
+          hidden.setAttribute("name", "authors")
+          hidden.setAttribute("value", element["authors"])
+          
+          form.append(hidden);
           
           
           if(element["added"] == false) {
@@ -66,7 +74,6 @@ script.
           }
 
           form.append(add);
-          form.append(hidden);
           result.append(form);
       }
       
