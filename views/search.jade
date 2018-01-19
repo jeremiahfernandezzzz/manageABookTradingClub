@@ -39,7 +39,8 @@ script.
           var hidden = document.createElement("input")
           hidden.setAttribute("type", "hidden")
           hidden.setAttribute("name", "title")
-          hidden.setAttribute("value", element["title"])
+          hidden.setAttribute("value", [element["title"],element["subtitle"],element["thumbnail"],element["author"]])
+          
           
           if(element["added"] == false) {
 

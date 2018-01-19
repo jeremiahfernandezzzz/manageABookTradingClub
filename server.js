@@ -161,7 +161,10 @@ app.post("/search", function(request,response){
   MongoClient.connect(url, function(err, db){
     if (db){
           var book = {
-            'title' : request.body.title, 
+            'title' : request.body.title[0],
+            'subtitle' : request.body.title[1],
+            'thumbnail' : request.body.title[2],
+            'author' : request.body.title[3], 
             'user': request.session.user
           }
           console.log("book " + book);
@@ -191,19 +194,13 @@ app.get("/allbooks", function(request,response){
         db.collection("bookclub_books").find({},{_id:0}).toArray().then(element => {
             added_books = element
             var data = []
-            results.forEach(function(element){
-              var added = false;
-              added_books.forEach(function(added_book){
-                if (added_book["title"] == element["title"]){
-                  added = true
-                }
-              })
+            added_books.forEach(function(element){
               data.push({
                 title: element["title"],
                 subtitle: element["subtitle"],              
                 author: element["author"],
                 thumbnail: element["thumbnail"],
-                added: added
+                added: true
               })
             })
             //data
