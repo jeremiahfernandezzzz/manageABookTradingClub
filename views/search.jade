@@ -12,25 +12,9 @@ script.
       //var subtitle = document.createTextNode(element["subtitle"]);
       var authors = document.createTextNode(element["authors"]);
       //var text = document.createTextNode("blahblahblah");
-      var add = document.createElement("input");
-      //add.setAttribute("id", "polls");
-      var form = document.createElement("form")
-      form.setAttribute("action", "/search")
-      form.setAttribute("method", "post")
       
-      var hidden = document.createElement("input")
-      hidden.setAttribute("type", "hidden")
-      hidden.setAttribute("name", "title")
-      hidden.setAttribute("value", element["title"])
       
-      add.setAttribute("class", "button special small");
-      add.setAttribute("type", "Submit");
-      add.setAttribute("value", "add to my books");
-      add.innerHTML = "add to my books";
-      add.setAttribute("style", "position:relative;float:right;");
       
-      form.append(add);
-      form.append(hidden);
       
       image.setAttribute("src", element["thumbnail"]);
       image.setAttribute("style", "position:relative;height:150px;float:left;padding:10px;")
@@ -41,7 +25,30 @@ script.
       //result.append(subtitle);
       //result.append(text);
       result.append(image);
-      result.append(form);
+      
+      if (JSON.parse(document.cookie).user){
+        var add = document.createElement("input");
+        //add.setAttribute("id", "polls");
+        var form = document.createElement("form")
+        form.setAttribute("action", "/search")
+        form.setAttribute("method", "post")
+
+        var hidden = document.createElement("input")
+        hidden.setAttribute("type", "hidden")
+        hidden.setAttribute("name", "title")
+        hidden.setAttribute("value", element["title"])
+
+        add.setAttribute("class", "button special small");
+        add.setAttribute("type", "Submit");
+        add.setAttribute("value", "add to my books");
+        add.innerHTML = "add to my books";
+        add.setAttribute("style", "position:relative;float:right;");
+
+        form.append(add);
+        form.append(hidden);
+        result.append(form);
+      }
+      
       document.querySelector("#results").append(result)
       document.querySelector("#results").append(document.createTextNode("  "))
     })

@@ -129,6 +129,23 @@ app.get("/search", function(request,response){
 
 app.post("/search", function(request,response){
   console.log(request.body)
+  MongoClient.connect(url, function(err, db){
+    if (db){
+          console.log("connected to " + url);
+          db.collection("bookclub_books").find({'title' : request.body.username}).toArray().then(element => {
+        if (element == "") {
+          db.collection("bookclub_books").insert(book);
+          response.redirect("/");
+        } else {
+          response.redirect("/");
+          //response.send("username already taken")
+        }
+      })
+    }
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
 })
 
 app.get("/dreams", function (request, response) {
