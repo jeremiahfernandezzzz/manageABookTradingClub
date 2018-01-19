@@ -38,7 +38,7 @@ app.get("/signup", function (request, response) {
   if(request.session.user){
     response.redirect("/")
   }else{
-    response.sendFile(__dirname + '/views/newuser.html');
+    response.sendFile(__dirname + '/views/signup.html');
   }
 });
 
