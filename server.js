@@ -8,7 +8,7 @@ var mongodb = require("mongodb")
 var MongoClient = mongodb.MongoClient;
 var url = process.env.DB_URL;
 var bodyParser = require('body-parser');
-var session = require('express-session');
+var session = require('cookie-session');
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
@@ -19,12 +19,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(session({
-  secret: 'work hard',
-  resave: true,
-  saveUninitialized: false,
-  cookie: {}
+  name: 'session',
+
+  keys: ['key1', 'key2'],
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
-// http://expressjs.com/en/starter/basic-routing.html
+// http://expresjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/search.html');
   if (request.session){
@@ -53,10 +54,10 @@ app.post("/signin", function (request, response) {
               response.send("wrong password")
             } else {
               response.send("logged in")
-              request.session.cookie.user = request.body.username
-              request.session.save(
+              request.session.user = request.body.username
+              //request.session.save(
                 console.log("zxc" + JSON.stringify(request.session))
-              )
+              //)
             }
           })
         }
