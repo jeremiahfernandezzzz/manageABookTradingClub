@@ -28,7 +28,7 @@ script.
       var request = document.createElement("input");
       //add.setAttribute("id", "polls");
       var form = document.createElement("form")
-      form.setAttribute("action", "/request")
+      form.setAttribute("action", "/allbooks")
       form.setAttribute("method", "post")
 
       var hidden = document.createElement("input")
@@ -58,6 +58,13 @@ script.
       hidden3.setAttribute("value", element["thumbnail"])
 
       form.append(hidden3);
+      
+     var hidden4 = document.createElement("input")
+      hidden4.setAttribute("type", "hidden")
+      hidden4.setAttribute("name", "user")
+      hidden4.setAttribute("value", element["user"])
+
+      form.append(hidden4);
 
       if(element["added"] == false) {
 
