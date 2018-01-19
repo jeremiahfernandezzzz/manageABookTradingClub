@@ -36,11 +36,17 @@ script.
           form.setAttribute("action", "/search")
           form.setAttribute("method", "post")
           
-          var data = [element["title"], element["subtitle"], element["thumbnail"], element["author"]]
+          var data = []
+          
+          data.push(element["title"])
+          data.push(element["subtitle"])
+          data.push(element["thumbnail"])
+          data.push(element["author"])
+          
           var hidden = document.createElement("input")
           hidden.setAttribute("type", "hidden")
-          hidden.setAttribute("name", "title")
-          hidden.setAttribute("value", data)
+          hidden.setAttribute("name", "data")
+          hidden.setAttribute("value", JSON.stringify({data: data}))
           
           
           if(element["added"] == false) {

@@ -117,11 +117,9 @@ app.set('view engine', 'jade');
 app.get("/search", function(request,response){
   var books = require('google-books-search');
   
-  var added_books = [];
   MongoClient.connect(url, function(err, db){
     if (db){
-        db.collection("bookclub_books").find({},{_id:0}).toArray().then(element => {
-          added_books = element
+        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
           
           books.search(request.query.qwe, function(error, results) {
             //console.log(JSON.stringify(results))
@@ -158,13 +156,14 @@ app.get("/search", function(request,response){
 
 app.post("/search", function(request,response){
   console.log(request.body)
+  var data = JSON/
   MongoClient.connect(url, function(err, db){
     if (db){
           var book = {
-            'title' : request.body.title[0],
-            'subtitle' : request.body.title[1],
-            'thumbnail' : request.body.title[2],
-            'author' : request.body.title[3], 
+            'title' : request.body.data[0],
+            'subtitle' : request.body.data[1],
+            'thumbnail' : request.body.data[2],
+            'author' : request.body.data[3], 
             'user': request.session.user
           }
           console.log("book " + JSON.stringify(book));
