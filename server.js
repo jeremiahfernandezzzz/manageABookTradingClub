@@ -296,7 +296,7 @@ app.get("/mybooks", function(request,response){
 app.get("/requests", function(request,response){
   MongoClient.connect(url, function(err, db){
     if (db){
-        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
+        db.collection("bookclub_books").find({user: request.session.user, request: {$exists:true}},{_id:0}).toArray().then(added_books => {
             var data = []
             added_books.forEach(function(element){
               var added = false;
@@ -307,12 +307,14 @@ app.get("/requests", function(request,response){
                     subtitle: element["subtitle"],              
                     authors: element["authors"],
                     thumbnail: element["thumbnail"],
-                    added: added
+                    user: element["user"],
+                    request: element["request"]
+                     
                   })
                 }
               })
             //data
-              response.render('mybooks', { data : JSON.stringify(data) });
+              response.render('requests', { data : JSON.stringify(data) });
           });
       }
     
