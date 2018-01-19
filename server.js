@@ -116,6 +116,18 @@ app.set('view engine', 'jade');
 
 app.get("/search", function(request,response){
   var books = require('google-books-search');
+  
+  MongoClient.connect(url, function(err, db){
+    if (db){
+        db.collection("bookclub_books").find({}).toArray().then(element => {
+          
+      })
+    }
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
+  
 
   books.search(request.query.qwe, function(error, results) {
     //console.log(JSON.stringify(results))
@@ -131,8 +143,12 @@ app.post("/search", function(request,response){
   console.log(request.body)
   MongoClient.connect(url, function(err, db){
     if (db){
-          console.log("connected to " + url);
-          db.collection("bookclub_books").find({'title' : request.body.username}).toArray().then(element => {
+          var book = {
+            'title' : request.body.title, 
+            'user': request.session.user
+          }
+          console.log("book " + book);
+          db.collection("bookclub_books").find(book).toArray().then(element => {
         if (element == "") {
           db.collection("bookclub_books").insert(book);
           response.redirect("/");

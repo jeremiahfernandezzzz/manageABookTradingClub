@@ -3,6 +3,9 @@ body
 script.
     var results = !{data}
     results.forEach(function(element){
+      
+      
+    
       var result = document.createElement("div");
       result.setAttribute("style", "float:left; border: medium dashed gray; margin: 5px;padding: 10px; color: white");
       var image = document.createElement("img");
@@ -27,6 +30,7 @@ script.
       result.append(image);
       
       if (JSON.parse(document.cookie).user){
+
         var add = document.createElement("input");
         //add.setAttribute("id", "polls");
         var form = document.createElement("form")
@@ -42,7 +46,7 @@ script.
         add.setAttribute("type", "Submit");
         add.setAttribute("value", "add to my books");
         add.innerHTML = "add to my books";
-        add.setAttribute("style", "position:relative;float:right;");
+        add.setAttribute("style", "position:relative;float:right;");   
 
         form.append(add);
         form.append(hidden);
