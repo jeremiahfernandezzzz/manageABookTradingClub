@@ -9,7 +9,7 @@ var MongoClient = mongodb.MongoClient;
 var url = process.env.DB_URL;
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var RedisStore = require('connect-redis')(session)
+var RedisStore = require('connect-redis')(session);
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -21,8 +21,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(session({
-  store: new RedisStore(),
-  secret: 'sup',
+  store: new RedisStore({
+    port: process.env.PORT
+  }),
+  secret: 'work hard',
   resave: true,
   saveUninitialized: false
 }));
@@ -30,7 +32,7 @@ app.use(session({
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/search.html');
   if (request.session){
-    console.log("loggeg in " + JSON.stringify(request.session))
+    console.log("asd " + JSON.stringify(request.session))
   }
 });
 
