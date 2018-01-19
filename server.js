@@ -29,16 +29,80 @@ app.use(cookies({
 // http://expresjs.com/en/starter/basic-routing.html
 
 app.get("/", function(request,response){
-  response.redirect("/allbooks")
+  //console.log(request.session)
+  var added_books = [];
+  MongoClient.connect(url, function(err, db){
+    if (db){
+        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
+            var data = []
+            added_books.forEach(function(element){
+              var added = false;
+              if (element["user"] == request.session.user){
+                added = true
+              }
+              data.push({
+                title: element["title"],
+                subtitle: element["subtitle"],              
+                authors: element["authors"],
+                thumbnail: element["thumbnail"],
+                user: element["user"],
+                added: added
+              })
+            })
+            //data
+              response.render('allbooks', { data : JSON.stringify(data) });
+        })
+      }
+    
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
 })
 
-app.get("/signup", function (request, response) {
-  if(request.session.user){
-    response.redirect("/")
-  }else{
-    response.sendFile(__dirname + '/views/signup.html');
-  }
-});
+app.post("/", function(request,response){
+  //console.log(request.body["authors"])
+  MongoClient.connect(url, function(err, db){
+    if (db){
+          var book = {
+            'title' : request.body["title"],
+            'subtitle' : request.body["subtitle"],
+            'thumbnail' : request.body["thumbnail"],
+            'authors' : request.body["authors"], 
+            'user': request.body["user"]
+          }
+          console.log("book " + JSON.stringify(book));
+          db.collection("bookclub_books").find(book).toArray().then(element => {
+          
+          if (element == "") {
+            //db.collection("bookclub_books").insert(book);
+            response.redirect("/");
+          } else {
+            db.collection("bookclub_books").update(book, {
+                'title' : request.body["title"],
+                'subtitle' : request.body["subtitle"],
+                'thumbnail' : request.body["thumbnail"],
+                'authors' : request.body["authors"], 
+                'user': request.body["user"],
+                'request': request.session.user
+              });
+            response.redirect("/");
+            //response.send("username already taken")
+          }
+          
+          })
+    }
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
+})
+
+app.get("/signout", function (request, response) {
+  request.session = null
+  console.log(request.session)
+  response.redirect("/")
+})
 
 app.get("/signin", function (request, response) {
   if(request.session.user){
@@ -47,12 +111,6 @@ app.get("/signin", function (request, response) {
     response.sendFile(__dirname + '/views/signin.html');
   }
 });
-
-app.get("/signout", function (request, response) {
-  request.session = null
-  console.log(request.session)
-  response.redirect("/")
-})
 
 app.post("/signin", function (request, response) {
   MongoClient.connect(url, function(err, db){
@@ -85,7 +143,15 @@ app.post("/signin", function (request, response) {
   })
 });
 
-app.post("/signin", function (request, response) {
+app.get("/signup", function (request, response) {
+  if(request.session.user){
+    response.redirect("/")
+  }else{
+    response.sendFile(__dirname + '/views/signup.html');
+  }
+});
+
+app.post("/signup", function (request, response) {
   console.log(request.body)
   MongoClient.connect(url, function(err, db){
     if (db){
@@ -200,71 +266,9 @@ app.post("/search", function(request,response){
 })
 
 app.get("/allbooks", function(request,response){
-  var added_books = [];
-  MongoClient.connect(url, function(err, db){
-    if (db){
-        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
-            var data = []
-            added_books.forEach(function(element){
-              var added = false;
-              if (element["user"] == request.session.user){
-                added = true
-              }
-              data.push({
-                title: element["title"],
-                subtitle: element["subtitle"],              
-                authors: element["authors"],
-                thumbnail: element["thumbnail"],
-                user: element["user"],
-                added: added
-              })
-            })
-            //data
-              response.render('allbooks', { data : JSON.stringify(data) });
-        })
-      }
-    
-    if (err) {
-     console.log("did not connect to " + url)
-    }
-  })
 })
+
 app.post("/allbooks", function(request,response){
-  //console.log(request.body["authors"])
-  MongoClient.connect(url, function(err, db){
-    if (db){
-          var book = {
-            'title' : request.body["title"],
-            'subtitle' : request.body["subtitle"],
-            'thumbnail' : request.body["thumbnail"],
-            'authors' : request.body["authors"], 
-            'user': request.body["user"]
-          }
-          console.log("book " + JSON.stringify(book));
-          db.collection("bookclub_books").find(book).toArray().then(element => {
-          
-          if (element == "") {
-            //db.collection("bookclub_books").insert(book);
-            response.redirect("/");
-          } else {
-            db.collection("bookclub_books").update(book, {
-                'title' : request.body["title"],
-                'subtitle' : request.body["subtitle"],
-                'thumbnail' : request.body["thumbnail"],
-                'authors' : request.body["authors"], 
-                'user': request.body["user"],
-                'request': request.session.user
-              });
-            response.redirect("/");
-            //response.send("username already taken")
-          }
-          
-          })
-    }
-    if (err) {
-     console.log("did not connect to " + url)
-    }
-  })
 })
 
 
