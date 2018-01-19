@@ -213,7 +213,7 @@ app.get("/allbooks", function(request,response){
               })
             })
             //data
-              response.render('allbooks', { data : JSON.stringify(data) });
+              response.render('allbookss', { data : JSON.stringify(data) });
           });
       }
     
