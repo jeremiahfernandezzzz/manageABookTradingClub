@@ -325,7 +325,7 @@ app.get("/requests", function(request,response){
 })
 
 app.post("/requests", function(request,response){
-  console.log(request.body.user)
+  console.log(request.body)
 })
 
 
