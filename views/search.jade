@@ -12,7 +12,13 @@ script.
       //var subtitle = document.createTextNode(element["subtitle"]);
       var authors = document.createTextNode(element["authors"]);
       //var text = document.createTextNode("blahblahblah");
-
+      var add = document.createElement("a");
+      //add.setAttribute("id", "polls");
+      add.setAttribute("class", "button special small");
+      add.innerHTML = "add to my books";
+      add.setAttribute("href", "/add");
+      add.setAttribute("style", "position:relative;float:right;");
+      
       image.setAttribute("src", element["thumbnail"]);
       image.setAttribute("style", "position:relative;height:150px;float:left;padding:10px;")
       
@@ -22,6 +28,7 @@ script.
       //result.append(subtitle);
       //result.append(text);
       result.append(image);
+      result.append(add);
       document.querySelector("#results").append(result)
       document.querySelector("#results").append(document.createTextNode("  "))
     })
