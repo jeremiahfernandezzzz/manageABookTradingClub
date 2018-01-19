@@ -122,42 +122,38 @@ app.get("/search", function(request,response){
     if (db){
         db.collection("bookclub_books").find({},{_id:0}).toArray().then(element => {
           added_books = element
-          console.log(added_books)
+          
+          books.search(request.query.qwe, function(error, results) {
+            //console.log(JSON.stringify(results))
+              if ( ! error ) {
+                  var data = []
+                  results.forEach(function(element){
+                    var added = false;
+                    added_books.forEach(function(added_book){
+                      if (added_book["title"] == element["title"]){
+                        added = true
+                      }
+                    })
+                    data.push({
+                      title: element["title"],
+                      subtitle: element["subtitle"],              
+                      author: element["author"],
+                      thumbnail: element["thumbnail"],
+                      added: added
+                    })
+                  })
+                  //data
+                  response.render('search', { data : JSON.stringify(data) });
+              } else {
+                  console.log(error);
+              }
+          });
       })
     }
     if (err) {
      console.log("did not connect to " + url)
     }
   })
-  
-
-  books.search(request.query.qwe, function(error, results) {
-    //console.log(JSON.stringify(results))
-      if ( ! error ) {
-          var data = []
-          results.forEach(function(element){
-            var added = false;
-            added_books.forEach(function(added_book){
-              console.log(added_book["title"] + " " + element["title"])
-              if (added_book["title"] == element["title"]){
-                console.log("asd")
-                added = true
-              }
-            })
-            data.push({
-              title: element["title"],
-              subtitle: element["subtitle"],              
-              author: element["author"],
-              thumbnail: element["thumbnail"],
-              added: added
-            })
-          })
-          //data
-          response.render('search', { data : JSON.stringify(data) });
-      } else {
-          console.log(error);
-      }
-  });
 })
 
 app.post("/search", function(request,response){

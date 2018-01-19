@@ -30,27 +30,36 @@ script.
       result.append(image);
       
       if (JSON.parse(document.cookie).user){
+          var add = document.createElement("input");
+          //add.setAttribute("id", "polls");
+          var form = document.createElement("form")
+          form.setAttribute("action", "/search")
+          form.setAttribute("method", "post")
 
-        var add = document.createElement("input");
-        //add.setAttribute("id", "polls");
-        var form = document.createElement("form")
-        form.setAttribute("action", "/search")
-        form.setAttribute("method", "post")
+          var hidden = document.createElement("input")
+          hidden.setAttribute("type", "hidden")
+          hidden.setAttribute("name", "title")
+          hidden.setAttribute("value", element["title"])
+          
+          if(element["added"] == false) {
 
-        var hidden = document.createElement("input")
-        hidden.setAttribute("type", "hidden")
-        hidden.setAttribute("name", "title")
-        hidden.setAttribute("value", element["title"])
+            add.setAttribute("class", "button special small");
+            add.setAttribute("type", "Submit");
+            add.setAttribute("value", "add to my books");
+            add.setAttribute("style", "position:relative;float:right;"); 
+            
+          } else {
 
-        add.setAttribute("class", "button special small");
-        add.setAttribute("type", "Submit");
-        add.setAttribute("value", "add to my books");
-        add.innerHTML = "add to my books";
-        add.setAttribute("style", "position:relative;float:right;");   
+            add.setAttribute("class", "button special small");
+            add.setAttribute("type", "Submit");
+            add.setAttribute("value", "add to my books");
+            add.setAttribute("style", "position:relative;float:right;"); 
+            
+          }
 
-        form.append(add);
-        form.append(hidden);
-        result.append(form);
+          form.append(add);
+          form.append(hidden);
+          result.append(form);
       }
       
       document.querySelector("#results").append(result)
