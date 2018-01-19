@@ -201,13 +201,9 @@ app.get("/allbooks", function(request,response){
             var data = []
             added_books.forEach(function(element){
               var added = false;
-              added_books.forEach(function(added_book){
-                if (added_book["title"] == element["title"]){
-                  if (added_book["user"] == request.session.user){
-                    added = true
-                  }
-                }
-              })
+              if (element["user"] == request.session.user){
+                added = true
+              }
               data.push({
                 title: element["title"],
                 subtitle: element["subtitle"],              
@@ -235,21 +231,17 @@ app.get("/mybooks", function(request,response){
             var data = []
             added_books.forEach(function(element){
               var added = false;
-              added_books.forEach(function(added_book){
-                if (added_book["title"] == element["title"]){
-                  if (added_book["user"] == request.session.user){
-                    added = true
-                  }
+                if (element["user"] == request.session.user){
+                  added = true
+                   data.push({
+                    title: element["title"],
+                    subtitle: element["subtitle"],              
+                    authors: element["authors"],
+                    thumbnail: element["thumbnail"],
+                    added: added
+                  })
                 }
               })
-              data.push({
-                title: element["title"],
-                subtitle: element["subtitle"],              
-                authors: element["authors"],
-                thumbnail: element["thumbnail"],
-                added: added
-              })
-            })
             //data
               response.render('allbooks', { data : JSON.stringify(data) });
           });

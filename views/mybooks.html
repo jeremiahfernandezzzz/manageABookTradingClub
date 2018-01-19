@@ -49,7 +49,7 @@
 
 <script>
   if(JSON.parse(document.cookie).user){
-    document.querySelector("#search").innerHTML = "wassup, " + JSON.parse(document.cookie).user
+    document.querySelector("#search").innerHTML = "these are your books, " + JSON.parse(document.cookie).user
     document.querySelector("#signIn").innerHTML = "Sign Out"
     document.querySelector("#signIn").setAttribute("href", "/signout")
   }else {

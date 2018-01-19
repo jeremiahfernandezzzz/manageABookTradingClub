@@ -25,7 +25,7 @@ script.
       result.append(image);
       
       if (JSON.parse(document.cookie).user){
-          var add = document.createElement("input");
+          //var add = document.createElement("input");
           //add.setAttribute("id", "polls");
           var form = document.createElement("form")
           form.setAttribute("action", "/search")
@@ -58,7 +58,7 @@ script.
           hidden3.setAttribute("value", element["thumbnail"])
           
           form.append(hidden3);
-          
+          /*
           if(element["added"] == false) {
 
             add.setAttribute("class", "button special small");
@@ -74,8 +74,8 @@ script.
             add.setAttribute("style", "position:relative;float:right;"); 
             
           }
-
-          form.append(add);
+          */
+          //form.append(add);
           form.append(hidden);
           result.append(form);
       }
