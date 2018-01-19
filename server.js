@@ -134,7 +134,16 @@ app.get("/search", function(request,response){
   books.search(request.query.qwe, function(error, results) {
     //console.log(JSON.stringify(results))
       if ( ! error ) {
-          response.render('search', { data : JSON.stringify(results) });
+          var data = {}
+          results.forEach(function(element){
+            data = {
+              title: element["title"],
+              subtitle: element["subtitle"],              
+              author: element["author"]
+            }
+          })
+          data
+          response.render('search', { data : JSON.stringify(data) });
       } else {
           console.log(error);
       }
