@@ -24,9 +24,11 @@ script.
       //result.append(text);
       result.append(image);
       
+      /*
       if (JSON.parse(document.cookie).user){
           //var add = document.createElement("input");
           //add.setAttribute("id", "polls");
+          /*
           var form = document.createElement("form")
           form.setAttribute("action", "/search")
           form.setAttribute("method", "post")
@@ -59,7 +61,6 @@ script.
           
           form.append(hidden3);
           
-          /*
           if(element["added"] == false) {
 
             add.setAttribute("class", "button special small");
@@ -77,10 +78,11 @@ script.
           }
 
           form.append(add);
-          */
-          form.append(hidden);
+          
+          //form.append(hidden);
           result.append(form);
       }
+      */
       
       document.querySelector("#results").append(result)
       document.querySelector("#results").append(document.createTextNode("  "))

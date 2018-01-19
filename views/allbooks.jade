@@ -23,9 +23,22 @@ script.
       //result.append(subtitle);
       //result.append(text);
       result.append(image);
-      
-      if (JSON.parse(document.cookie).user){
-          var add = document.createElement("input");
+      /*
+ else {
+
+            add.setAttribute("class", "button small");
+            add.setAttribute("type", "Submit");
+            add.setAttribute("value", "added");
+            add.setAttribute("style", "position:relative;float:right;"); 
+            
+          }
+          //form.append(add);
+          form.append(hidden);
+          result.append(form);
+      }
+          */
+        if (JSON.parse(document.cookie).user){
+          var request = document.createElement("input");
           //add.setAttribute("id", "polls");
           var form = document.createElement("form")
           form.setAttribute("action", "/search")
@@ -61,25 +74,14 @@ script.
           
           if(element["added"] == false) {
 
-            add.setAttribute("class", "button special small");
-            add.setAttribute("type", "Submit");
-            add.setAttribute("value", "send trade request");
-            add.setAttribute("style", "position:relative;float:right;"); 
-            
-          }/* else {
-
-            add.setAttribute("class", "button small");
-            add.setAttribute("type", "Submit");
-            add.setAttribute("value", "added");
-            add.setAttribute("style", "position:relative;float:right;"); 
-            
+            request.setAttribute("class", "button special small");
+            request.setAttribute("type", "Submit");
+            request.setAttribute("value", "send trade request");
+            request.setAttribute("style", "position:relative;float:right;"); 
+            form.append(request);
           }
-          */
-          form.append(add);
-          form.append(hidden);
-          result.append(form);
-      }
-      
+          result.append(form)
+        }
       document.querySelector("#results").append(result)
-      document.querySelector("#results").append(document.createTextNode("  "))
+      //document.querySelector("#results").append(document.createTextNode("  "))
     })
