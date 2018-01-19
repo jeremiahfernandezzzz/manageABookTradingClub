@@ -117,21 +117,21 @@ app.set('view engine', 'jade');
 app.get("/search", function(request,response){
   var books = require('google-books-search');
   
-  MongoClient.connect(url, function(err, db){
-    if (db){
-        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
-          
+  
           books.search(request.query.qwe, function(error, results) {
             //console.log(JSON.stringify(results))
               if ( ! error ) {
                   var data = []
+                  console.log("zxczxczx" + results)
                   results.forEach(function(element){
                     var added = false;
+                    /*
                     added_books.forEach(function(added_book){
                       if (added_book["title"] == element["title"]){
                         added = true
                       }
                     })
+                    */
                     data.push({
                       title: element["title"],
                       subtitle: element["subtitle"],              
@@ -140,12 +140,17 @@ app.get("/search", function(request,response){
                       added: added
                     })
                   })
-                  //data
+                  console.log("asdasdasd"  + JSON.stringify(data))
                   response.render('search', { data : JSON.stringify(data) });
               } else {
                   console.log(error);
               }
           });
+  
+  MongoClient.connect(url, function(err, db){
+    if (db){
+        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
+          
       })
     }
     if (err) {
@@ -155,15 +160,15 @@ app.get("/search", function(request,response){
 })
 
 app.post("/search", function(request,response){
-  console.log(request.body)
-  var data = JSON/
+  console.log(request.body.data.data)
+  var data = request.body.data.data
   MongoClient.connect(url, function(err, db){
     if (db){
           var book = {
-            'title' : request.body.data[0],
-            'subtitle' : request.body.data[1],
-            'thumbnail' : request.body.data[2],
-            'author' : request.body.data[3], 
+            'title' : data[0],
+            'subtitle' : data[1],
+            'thumbnail' : data[2],
+            'author' : data[3], 
             'user': request.session.user
           }
           console.log("book " + JSON.stringify(book));
