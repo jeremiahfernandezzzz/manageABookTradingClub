@@ -194,8 +194,6 @@ app.post("/search", function(request,response){
 })
 
 app.get("/allbooks", function(request,response){
-  var books = require('google-books-search');
-  
   var added_books = [];
   MongoClient.connect(url, function(err, db){
     if (db){
@@ -227,8 +225,40 @@ app.get("/allbooks", function(request,response){
      console.log("did not connect to " + url)
     }
   })
-  
-    //response.render('allbooks', { data : JSON.stringify(data) });
+})
+
+app.get("/mybooks", function(request,response){
+  var added_books = [];
+  MongoClient.connect(url, function(err, db){
+    if (db){
+        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
+            var data = []
+            added_books.forEach(function(element){
+              var added = false;
+              added_books.forEach(function(added_book){
+                if (added_book["title"] == element["title"]){
+                  if (added_book["user"] == request.session.user){
+                    added = true
+                  }
+                }
+              })
+              data.push({
+                title: element["title"],
+                subtitle: element["subtitle"],              
+                authors: element["authors"],
+                thumbnail: element["thumbnail"],
+                added: added
+              })
+            })
+            //data
+              response.render('allbooks', { data : JSON.stringify(data) });
+          });
+      }
+    
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
 })
 
 app.get("/dreams", function (request, response) {
