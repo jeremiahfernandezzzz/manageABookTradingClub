@@ -128,7 +128,9 @@ app.get("/search", function(request,response){
                     var added = false;
                     added_books.forEach(function(added_book){
                       if (added_book["title"] == element["title"]){
-                        added = true
+                        if (added_book["user"] == request.session.user){
+                          added = true
+                        }
                       }
                     })
                     data.push({
@@ -203,7 +205,9 @@ app.get("/allbooks", function(request,response){
               var added = false;
               added_books.forEach(function(added_book){
                 if (added_book["title"] == element["title"]){
-                  added = true
+                  if (added_book["user"] == request.session.user){
+                    added = true
+                  }
                 }
               })
               data.push({
