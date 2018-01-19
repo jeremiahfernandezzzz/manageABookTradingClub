@@ -25,10 +25,11 @@ app.use(cookies({
   // Cookie Options
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
+
 // http://expresjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
-  response.sendFile(__dirname + '/views/search.html');
   if (request.session){
+    response.sendFile((__dirname + '/views/search.html'), {headers: {'Set-Cookie': request.session}});
     console.log("asd " + JSON.stringify(request.session))
   }
 });
