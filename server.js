@@ -213,8 +213,8 @@ app.get("/allbooks", function(request,response){
               })
             })
             //data
-              response.render('allbookss', { data : JSON.stringify(data) });
-          });
+              response.render('allbooks', { data : JSON.stringify(data) });
+        })
       }
     
     if (err) {
@@ -274,3 +274,4 @@ var dreams = [
 var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
+
