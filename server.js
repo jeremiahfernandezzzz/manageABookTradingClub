@@ -127,6 +127,10 @@ app.get("/search", function(request,response){
   });
 })
 
+app.post("/search", function(request,response){
+  console.log(request.body)
+})
+
 app.get("/dreams", function (request, response) {
   response.send(dreams);
 });

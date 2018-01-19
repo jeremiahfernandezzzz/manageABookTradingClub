@@ -6,9 +6,9 @@ script.
       var result = document.createElement("div");
       result.setAttribute("style", "float:left; border: medium dashed gray; margin: 5px;padding: 10px; color: white");
       var image = document.createElement("img");
-      var title = document.createElement("h2");
-      title.setAttribute("style", "color: white");
-      var name = document.createTextNode(element["title"]);
+      var header = document.createElement("h2");
+      header.setAttribute("style", "color: white");
+      var title = document.createTextNode(element["title"]);
       //var subtitle = document.createTextNode(element["subtitle"]);
       var authors = document.createTextNode(element["authors"]);
       //var text = document.createTextNode("blahblahblah");
@@ -18,6 +18,11 @@ script.
       form.setAttribute("action", "/search")
       form.setAttribute("method", "post")
       
+      var hidden = document.createElement("input")
+      hidden.setAttribute("type", "hidden")
+      hidden.setAttribute("name", "title")
+      hidden.setAttribute("value", element["title"])
+      
       add.setAttribute("class", "button special small");
       add.setAttribute("type", "Submit");
       add.setAttribute("value", "add to my books");
@@ -25,17 +30,18 @@ script.
       add.setAttribute("style", "position:relative;float:right;");
       
       form.append(add);
+      form.append(hidden);
       
       image.setAttribute("src", element["thumbnail"]);
       image.setAttribute("style", "position:relative;height:150px;float:left;padding:10px;")
       
-      title.append(name);
-      result.append(title);
+      header.append(title);
+      result.append(header);
       result.append(authors);
       //result.append(subtitle);
       //result.append(text);
       result.append(image);
-      result.append(form)
+      result.append(form);
       document.querySelector("#results").append(result)
       document.querySelector("#results").append(document.createTextNode("  "))
     })
