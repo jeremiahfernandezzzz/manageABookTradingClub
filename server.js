@@ -182,6 +182,43 @@ app.post("/search", function(request,response){
   })
 })
 
+app.get("/allbooks", function(request,response){
+  var books = require('google-books-search');
+  
+  var added_books = [];
+  MongoClient.connect(url, function(err, db){
+    if (db){
+        db.collection("bookclub_books").find({},{_id:0}).toArray().then(element => {
+            added_books = element
+            var data = []
+            results.forEach(function(element){
+              var added = false;
+              added_books.forEach(function(added_book){
+                if (added_book["title"] == element["title"]){
+                  added = true
+                }
+              })
+              data.push({
+                title: element["title"],
+                subtitle: element["subtitle"],              
+                author: element["author"],
+                thumbnail: element["thumbnail"],
+                added: added
+              })
+            })
+            //data
+              response.render('allbooks', { data : JSON.stringify(data) });
+          });
+      }
+    
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
+  
+    //response.render('allbooks', { data : JSON.stringify(data) });
+})
+
 app.get("/dreams", function (request, response) {
   response.send(dreams);
 });
