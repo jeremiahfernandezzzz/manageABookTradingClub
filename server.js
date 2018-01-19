@@ -211,7 +211,14 @@ app.post("/allbooks", function(request,response){
             //db.collection("bookclub_books").insert(book);
             response.redirect("/");
           } else {
-            db.collection("bookclub_books").update(book, {request: request.session.user});
+            db.collection("bookclub_books").update(book, {
+                'title' : request.body["title"],
+                'subtitle' : request.body["subtitle"],
+                'thumbnail' : request.body["thumbnail"],
+                'authors' : request.body["authors"], 
+                'user': request.body["user"],
+                'request': request.session.user
+              });
             response.redirect("/");
             //response.send("username already taken")
           }
