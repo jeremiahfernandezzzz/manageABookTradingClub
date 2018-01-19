@@ -53,12 +53,13 @@ app.post("/signin", function (request, response) {
             if (element == "") {
               response.send("wrong password")
             } else {
-              response.send("logged in")
+              //response.send("logged in")
               
               request.session.user = request.body.username
               //request.cookies = {user: request.body.username}
               //request.session.save(
                 console.log("zxc" + JSON.stringify(request.session))
+                response.redirect("/")
               //)
             }
           })
