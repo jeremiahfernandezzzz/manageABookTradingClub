@@ -117,10 +117,12 @@ app.set('view engine', 'jade');
 app.get("/search", function(request,response){
   var books = require('google-books-search');
   
+  var added_books = [];
   MongoClient.connect(url, function(err, db){
     if (db){
-        db.collection("bookclub_books").find({}).toArray().then(element => {
-          
+        db.collection("bookclub_books").find({},{_id:0}).toArray().then(element => {
+          added_books = element
+          console.log(added_books)
       })
     }
     if (err) {
