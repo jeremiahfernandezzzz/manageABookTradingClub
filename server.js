@@ -21,7 +21,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
   secret: 'work hard',
   resave: true,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {}
 }));
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
@@ -52,7 +53,7 @@ app.post("/signin", function (request, response) {
               response.send("wrong password")
             } else {
               response.send("logged in")
-              request.session.user = request.body.username
+              request.session.cookie.user = request.body.username
               request.session.save(
                 console.log("zxc" + JSON.stringify(request.session))
               )
