@@ -213,7 +213,7 @@ app.get("/allbooks", function(request,response){
               data.push({
                 title: element["title"],
                 subtitle: element["subtitle"],              
-                author: element["authors"],
+                authors: element["authors"],
                 thumbnail: element["thumbnail"],
                 added: added
               })
