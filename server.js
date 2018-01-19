@@ -8,7 +8,7 @@ var mongodb = require("mongodb")
 var MongoClient = mongodb.MongoClient;
 var url = process.env.DB_URL;
 var bodyParser = require('body-parser');
-var session = require('cookie-session');
+var cookies = require('cookie-session');
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
@@ -18,7 +18,7 @@ app.use(express.static('views'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(session({
+app.use(cookies({
   name: 'session',
 
   keys: ['key1', 'key2'],
@@ -54,7 +54,9 @@ app.post("/signin", function (request, response) {
               response.send("wrong password")
             } else {
               response.send("logged in")
+              
               request.session.user = request.body.username
+              //request.cookies = {user: request.body.username}
               //request.session.save(
                 console.log("zxc" + JSON.stringify(request.session))
               //)
