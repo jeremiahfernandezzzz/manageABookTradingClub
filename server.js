@@ -29,7 +29,7 @@ app.use(cookies({
 // http://expresjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
   if (request.session){
-    response.sendFile((__dirname + '/views/search.html'), {headers: {'Set-Cookie': request.session}});
+    response.sendFile((__dirname + '/views/search.html'), {headers: {'Set-Cookie': JSON.stringify(request.session)}});
     console.log("asd " + JSON.stringify(request.session))
   }
 });
@@ -39,8 +39,18 @@ app.get("/newuser", function (request, response) {
 });
 
 app.get("/signin", function (request, response) {
-  response.sendFile(__dirname + '/views/signin.html');
+  if(request.session.user){
+    response.redirect("/")
+  }else{
+    response.sendFile(__dirname + '/views/signin.html');
+  }
 });
+
+app.get("/signout", function (request, response) {
+  request.session = null
+  console.log(request.session)
+  response.redirect("/")
+})
 
 app.post("/signin", function (request, response) {
   MongoClient.connect(url, function(err, db){
