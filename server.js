@@ -30,72 +30,13 @@ app.use(cookies({
 
 app.get("/", function(request,response){
   //console.log(request.session)
-  var added_books = [];
-  MongoClient.connect(url, function(err, db){
-    if (db){
-        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
-            var data = []
-            added_books.forEach(function(element){
-              var added = false;
-              if (element["user"] == request.session.user){
-                added = true
-              }
-              data.push({
-                title: element["title"],
-                subtitle: element["subtitle"],              
-                authors: element["authors"],
-                thumbnail: element["thumbnail"],
-                user: element["user"],
-                added: added
-              })
-            })
-            //data
-              response.render('allbooks', { data : JSON.stringify(data) });
-        })
-      }
-    
-    if (err) {
-     console.log("did not connect to " + url)
-    }
-  })
+    if (request.session){
+    response.sendFile((__dirname + '/views/search.html'), {headers: {'Set-Cookie': JSON.stringify(request.session)}});
+    console.log("asd " + JSON.stringify(request.session))
+  }
 })
 
 app.post("/", function(request,response){
-  //console.log(request.body["authors"])
-  MongoClient.connect(url, function(err, db){
-    if (db){
-          var book = {
-            'title' : request.body["title"],
-            'subtitle' : request.body["subtitle"],
-            'thumbnail' : request.body["thumbnail"],
-            'authors' : request.body["authors"], 
-            'user': request.body["user"]
-          }
-          console.log("book " + JSON.stringify(book));
-          db.collection("bookclub_books").find(book).toArray().then(element => {
-          
-          if (element == "") {
-            //db.collection("bookclub_books").insert(book);
-            response.redirect("/");
-          } else {
-            db.collection("bookclub_books").update(book, {
-                'title' : request.body["title"],
-                'subtitle' : request.body["subtitle"],
-                'thumbnail' : request.body["thumbnail"],
-                'authors' : request.body["authors"], 
-                'user': request.body["user"],
-                'request': request.session.user
-              });
-            response.redirect("/");
-            //response.send("username already taken")
-          }
-          
-          })
-    }
-    if (err) {
-     console.log("did not connect to " + url)
-    }
-  })
 })
 
 app.get("/signout", function (request, response) {
@@ -177,15 +118,7 @@ app.post("/signup", function (request, response) {
 });
 app.set('view engine', 'jade');
 
-app.get("/search", function (request, response) {
-  if (request.session){
-    response.sendFile((__dirname + '/views/search.html'), {headers: {'Set-Cookie': JSON.stringify(request.session)}});
-    console.log("asd " + JSON.stringify(request.session))
-  }
-});
-
-/*
-app.get("/search2", function(request,response){
+app.get("/search", function(request,response){
   var books = require('google-books-search');
   MongoClient.connect(url, function(err, db){
     if (db){
@@ -234,8 +167,18 @@ app.get("/search2", function(request,response){
     }
   })
 })
-*/
-app.post("/search", function(request,response){
+
+/*
+
+
+app.get("/search", function (request, response) {
+  if (request.session){
+    response.sendFile((__dirname + '/views/search.html'), {headers: {'Set-Cookie': JSON.stringify(request.session)}});
+    console.log("asd " + JSON.stringify(request.session))
+  }
+});
+
+app.post("/search2", function(request,response){
   //console.log(request.body["authors"])
   MongoClient.connect(url, function(err, db){
     if (db){
@@ -264,10 +207,76 @@ app.post("/search", function(request,response){
   })
 })
 
+*/
 app.get("/allbooks", function(request,response){
+  
+  var added_books = [];
+  MongoClient.connect(url, function(err, db){
+    if (db){
+        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
+            var data = []
+            added_books.forEach(function(element){
+              var added = false;
+              if (element["user"] == request.session.user){
+                added = true
+              }
+              data.push({
+                title: element["title"],
+                subtitle: element["subtitle"],              
+                authors: element["authors"],
+                thumbnail: element["thumbnail"],
+                user: element["user"],
+                added: added
+              })
+            })
+            //data
+              response.render('allbooks', { data : JSON.stringify(data) });
+        })
+      }
+    
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
 })
 
 app.post("/allbooks", function(request,response){
+  
+  //console.log(request.body["authors"])
+  MongoClient.connect(url, function(err, db){
+    if (db){
+          var book = {
+            'title' : request.body["title"],
+            'subtitle' : request.body["subtitle"],
+            'thumbnail' : request.body["thumbnail"],
+            'authors' : request.body["authors"], 
+            'user': request.body["user"]
+          }
+          console.log("book " + JSON.stringify(book));
+          db.collection("bookclub_books").find(book).toArray().then(element => {
+          
+          if (element == "") {
+            //db.collection("bookclub_books").insert(book);
+            response.redirect("/");
+          } else {
+            db.collection("bookclub_books").update(book, {
+                'title' : request.body["title"],
+                'subtitle' : request.body["subtitle"],
+                'thumbnail' : request.body["thumbnail"],
+                'authors' : request.body["authors"], 
+                'user': request.body["user"],
+                'request': request.session.user
+              });
+            response.redirect("/");
+            //response.send("username already taken")
+          }
+          
+          })
+    }
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
 })
 
 
