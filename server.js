@@ -318,7 +318,7 @@ app.get("/mybooks", function(request,response){
 app.get("/requests", function(request,response){
   MongoClient.connect(url, function(err, db){
     if (db){
-        db.collection("bookclub_books").find({user: request.session.user, request: {$ne:null}},{_id:0}).toArray().then(added_books => {
+        db.collection("bookclub_books").find({user: request.session.user},{_id:0}).toArray().then(added_books => {
             var data = []
             added_books.forEach(function(element){
               var added = false;
