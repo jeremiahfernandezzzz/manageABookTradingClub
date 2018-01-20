@@ -23,8 +23,9 @@ script.
     //result.append(subtitle);
     //result.append(text);
     result.append(image);
-
-    if (JSON.parse(document.cookie).user){
+    
+    
+    if (document.cookie){
       var request = document.createElement("input");
       //add.setAttribute("id", "polls");
       var form = document.createElement("form")
@@ -76,6 +77,7 @@ script.
         result.append(form)
         }
       }
+      
 
     document.querySelector("#results").append(result)
   })

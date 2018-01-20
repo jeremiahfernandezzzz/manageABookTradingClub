@@ -43,6 +43,7 @@ app.get("/", function(request,response){
 app.get("/signout", function (request, response) {
   request.session = null
   console.log(request.session)
+  response.setHeader('Set-Cookie',JSON.stringify(request.session))
   response.redirect("/")
 })
 
@@ -211,7 +212,7 @@ app.post("/search", function(request,response){
 
 
 app.get("/allbooks", function(request,response){
-  console.log(JSON.stringify(request.session))
+  console.log("fucktard" + JSON.stringify(request.session))
   var added_books = [];
   MongoClient.connect(url, function(err, db){
     if (db){
