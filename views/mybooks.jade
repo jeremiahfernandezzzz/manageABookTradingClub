@@ -24,71 +24,67 @@ script.
       //result.append(text);
       result.append(image);
       
-          
-      if(element["request"] != ""){
       
-      var form = document.createElement("form")
-          form.setAttribute("action", "/mybooks")
-          form.setAttribute("method", "post")
+
+          
+      var removeform = document.createElement("form")
+      removeform.setAttribute("action", "/search")
+      removeform.setAttribute("method", "post")
           
           var hidden = document.createElement("input")
           hidden.setAttribute("type", "hidden")
           hidden.setAttribute("name", "title")
           hidden.setAttribute("value", element["title"])
           
-          form.append(hidden);
+          
+          removeform.append(hidden);
+          //form.append(hidden);
         
           var hidden1 = document.createElement("input")
           hidden1.setAttribute("type", "hidden")
           hidden1.setAttribute("name", "authors")
           hidden1.setAttribute("value", element["authors"])
           
-          form.append(hidden1);
+          
+          removeform.append(hidden1);
+          //form.append(hidden1);
           
           var hidden2 = document.createElement("input")
           hidden2.setAttribute("type", "hidden")
           hidden2.setAttribute("name", "subtitle")
           hidden2.setAttribute("value", element["subtitle"])
           
-          form.append(hidden2);
+          
+          removeform.append(hidden2);
+          //form.append(hidden2);
           
           var hidden3 = document.createElement("input")
           hidden3.setAttribute("type", "hidden")
           hidden3.setAttribute("name", "thumbnail")
           hidden3.setAttribute("value", element["thumbnail"])
           
-          form.append(hidden3);
+          
+          removeform.append(hidden3);
+          //form.append(hidden3);
           
           var hidden4 = document.createElement("input")
           hidden4.setAttribute("type", "hidden")
           hidden4.setAttribute("name", "user")
           hidden4.setAttribute("value", element["user"])
           
-          form.append(hidden4);
+          removeform.append(hidden4);
+          //form.append(hidden4);
           
           var hidden5 = document.createElement("input")
           hidden5.setAttribute("type", "hidden")
           hidden5.setAttribute("name", "request")
           hidden5.setAttribute("value", element["request"])
           
-          form.append(hidden5);
-
-          var accept = document.createElement("input");
-          accept.setAttribute("class", "button special small");
-          accept.setAttribute("type", "Submit");
-          accept.setAttribute("value", "accept request");
-          accept.setAttribute("style", "position:relative;float:right;"); 
-            
-          form.append(accept);
-          result.append(form);
-      
-      }
-      
-
-      var removeform = document.createElement("form")
-      removeform.setAttribute("action", "/search")
-      removeform.setAttribute("method", "post")
-
+          
+          removeform.append(hidden5);
+          //form.append(hidden5);
+          
+          
       var remove = document.createElement("input");
       remove.setAttribute("class", "button small");
       remove.setAttribute("type", "Submit");
@@ -96,6 +92,16 @@ script.
       remove.setAttribute("style", "position:relative;float:right;"); 
 
       removeform.append(remove);
+          
+      if(element["request"] != ""){
+            
+          form.append(accept);
+          result.append(form);
+      
+      }
+      
+
+
       result.append(removeform);
       /*
       if (JSON.parse(document.cookie).user){
