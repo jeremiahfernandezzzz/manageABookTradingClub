@@ -95,6 +95,72 @@ script.
           
       if(element["request"] != ""){
             
+                
+          var form = document.createElement("form")
+          form.setAttribute("action", "/mybooks")
+          form.setAttribute("method", "post")
+
+                    
+          var hidden6 = document.createElement("input")
+          hidden6.setAttribute("type", "hidden")
+          hidden6.setAttribute("name", "title")
+          hidden6.setAttribute("value", element["title"])
+          
+          
+          //removeform.append(hidden);
+          form.append(hidden6);
+        
+          var hidden7 = document.createElement("input")
+          hidden7.setAttribute("type", "hidden")
+          hidden7.setAttribute("name", "authors")
+          hidden7.setAttribute("value", element["authors"])
+          
+          
+          //removeform.append(hidden1);
+          form.append(hidden7);
+          
+          var hidden2 = document.createElement("input")
+          hidden2.setAttribute("type", "hidden")
+          hidden2.setAttribute("name", "subtitle")
+          hidden2.setAttribute("value", element["subtitle"])
+          
+          
+          //removeform.append(hidden2);
+          form.append(hidden2);
+          
+          var hidden8 = document.createElement("input")
+          hidden8.setAttribute("type", "hidden")
+          hidden8.setAttribute("name", "thumbnail")
+          hidden8.setAttribute("value", element["thumbnail"])
+          
+          
+          //removeform.append(hidden3);
+          form.append(hidden8);
+          
+          var hidden9 = document.createElement("input")
+          hidden9.setAttribute("type", "hidden")
+          hidden9.setAttribute("name", "user")
+          hidden9.setAttribute("value", element["user"])
+          
+          //removeform.append(hidden4);
+          form.append(hidden9);
+          
+          var hidden10 = document.createElement("input")
+          hidden10.setAttribute("type", "hidden")
+          hidden10.setAttribute("name", "request")
+          hidden10.setAttribute("value", element["request"])
+          
+          
+          //removeform.append(hidden5);
+          form.append(hidden10);
+          
+
+          var accept = document.createElement("input");
+          accept.setAttribute("class", "button special small");
+          accept.setAttribute("type", "Submit");
+          accept.setAttribute("value", "accept request");
+          accept.setAttribute("style", "position:relative;float:right;"); 
+
           form.append(accept);
           result.append(form);
       
