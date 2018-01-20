@@ -24,6 +24,7 @@ script.
       //result.append(text);
       result.append(image);
       
+          
       if(element["request"] != ""){
       
       var form = document.createElement("form")
@@ -82,6 +83,20 @@ script.
           result.append(form);
       
       }
+      
+
+      var removeform = document.createElement("form")
+      removeform.setAttribute("action", "/search")
+      removeform.setAttribute("method", "post")
+
+      var remove = document.createElement("input");
+      remove.setAttribute("class", "button small");
+      remove.setAttribute("type", "Submit");
+      remove.setAttribute("value", "remove");
+      remove.setAttribute("style", "position:relative;float:right;"); 
+
+      removeform.append(remove);
+      result.append(removeform);
       /*
       if (JSON.parse(document.cookie).user){
           //var add = document.createElement("input");
