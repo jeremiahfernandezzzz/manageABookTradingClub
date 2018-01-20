@@ -245,10 +245,10 @@ app.get("/allbooks", function(request,response){
 })
 
 app.post("/allbooks", function(request,response){
-  console.log()
+  console.log(request.body)
   MongoClient.connect(url, function(err, db){
     if (db){
-        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
+        /*db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
             console.log(added_books)
             var data = []
             added_books.forEach(function(element){
@@ -280,6 +280,7 @@ app.post("/allbooks", function(request,response){
           'thumbnail' : request.body["thumbnail"],
           'authors' : request.body["authors"], 
           'request': request.session.user,
+          'user': request.body["user"]
         });
       }
     
