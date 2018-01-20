@@ -30,7 +30,7 @@ app.use(cookies({
 
 app.get("/", function(request,response){
   //console.log(request.session)
-    if (request.session){
+    if (!request.session){
     response.sendFile((__dirname + '/views/search.html'), {headers: {'Set-Cookie': JSON.stringify(request.session)}});
     console.log("asd " + JSON.stringify(request.session))
   }
