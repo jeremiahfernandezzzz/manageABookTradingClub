@@ -212,10 +212,10 @@ app.post("/search", function(request,response){
 
 app.get("/allbooks", function(request,response){
   console.log("fucktard" + JSON.stringify(request.session))
-  var added_books = [];
+  //var added_books = [];
   MongoClient.connect(url, function(err, db){
     if (db){
-        db.collection("bookclub_books").find({request: {$exists:false}},{_id:0}).toArray().then(added_books => {
+        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
             var data = []
             added_books.forEach(function(element){
               var added = false;
