@@ -49,7 +49,7 @@ app.get("/signin", function (request, response) {
   if(request.session.user){
     response.redirect("/")
   }else{
-    response.sendFile((__dirname + '/views/signin.html'))//, {headers: {'Set-Cookie': JSON.stringify(request.session)}});
+    response.sendFile((__dirname + '/views/signin.html')), {headers: {'Set-Cookie': JSON.stringify(request.session)}});
   }
 });
 
@@ -70,7 +70,7 @@ app.post("/signin", function (request, response) {
               //request.cookies = {user: request.body.username}
               //request.session.save(
                 console.log("zxc" + JSON.stringify(request.session))
-                response.redirect("/")
+                response.send("logged in")
               //)
             }
           })
