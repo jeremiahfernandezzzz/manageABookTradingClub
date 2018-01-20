@@ -28,13 +28,6 @@ app.use(cookies({
 
 // http://expresjs.com/en/starter/basic-routing.html
 
-app.get("/search", function(request,response){
-  //console.log(request.session)
-  if (request.session){
-    response.sendFile((__dirname + '/views/search.html'))//, {headers: {'Set-Cookie': JSON.stringify(request.session)}});
-    console.log("asd " + JSON.stringify(request.session))
-  } 
-})
 
 app.get("/", function(request,response){
   response.redirect("/allbooks")
@@ -120,6 +113,14 @@ app.post("/signup", function (request, response) {
 });
 app.set('view engine', 'jade');
 
+app.get("/search", function(request,response){
+  //console.log(request.session)
+  if (request.session){
+    response.sendFile((__dirname + '/views/search.html'))//, {headers: {'Set-Cookie': JSON.stringify(request.session)}});
+    console.log("asd " + JSON.stringify(request.session))
+  } 
+})
+
 app.post("/search", function(request,response){
   var books = require('google-books-search');
   MongoClient.connect(url, function(err, db){
@@ -195,10 +196,10 @@ app.post("/search", function(request,response){
           db.collection("bookclub_books").find(book).toArray().then(element => {
         if (element == "") {
           db.collection("bookclub_books").insert(book);
-          response.redirect("/");
+          response.redirect("/mybooks");
         } else {
           db.collection("bookclub_books").remove(book);
-          response.redirect("/");
+          response.redirect("/mybooks");
           //response.send("username already taken")
         }
       })
@@ -248,7 +249,8 @@ app.post("/allbooks", function(request,response){
   console.log(request.body)
   MongoClient.connect(url, function(err, db){
     if (db){
-        /*db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
+      /*
+        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
             console.log(added_books)
             var data = []
             added_books.forEach(function(element){
@@ -266,7 +268,7 @@ app.post("/allbooks", function(request,response){
               })
             //data
               response.render('allbooks', { data : JSON.stringify(data) });
-          });
+          });*/
         var book = {
           'title' : request.body["title"],
           'subtitle' : request.body["subtitle"],
