@@ -36,7 +36,8 @@ app.get("/search", function(request,response){
   } 
 })
 
-app.post("/", function(request,response){
+app.get("/", function(request,response){
+  response.redirect("/allbooks")
 })
 
 app.get("/signout", function (request, response) {
