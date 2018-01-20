@@ -267,12 +267,27 @@ app.post("/allbooks", function(request,response){
             //data
               response.render('allbooks', { data : JSON.stringify(data) });
           });
+        var book = {
+          'title' : request.body["title"],
+          'subtitle' : request.body["subtitle"],
+          'thumbnail' : request.body["thumbnail"],
+          'authors' : request.body["authors"], 
+          'user': request.body["user"]
+        }
+        db.collection("bookclub_books").update(book, {
+          'title' : request.body["title"],
+          'subtitle' : request.body["subtitle"],
+          'thumbnail' : request.body["thumbnail"],
+          'authors' : request.body["authors"], 
+          'request': request.session.user,
+        });
       }
     
     if (err) {
      console.log("did not connect to " + url)
     }
   })
+
   //console.log(request.body["authors"])
   /*
   MongoClient.connect(url, function(err, db){
