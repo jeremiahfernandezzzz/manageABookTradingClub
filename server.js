@@ -337,7 +337,7 @@ app.get("/requests", function(request,response){
               })
             //data
               response.render('requests', { data : JSON.stringify(data) });
-              response.redirect("/");
+              //response.redirect("/");
           });
       }
     
