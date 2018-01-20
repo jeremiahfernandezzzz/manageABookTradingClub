@@ -49,7 +49,7 @@ app.get("/signin", function (request, response) {
   if(request.session.user){
     response.redirect("/")
   }else{
-    response.sendFile((__dirname + '/views/signin.html')), {headers: {'Set-Cookie': JSON.stringify(request.session)}});
+    response.sendFile((__dirname + '/views/signin.html'));
   }
 });
 
@@ -70,7 +70,7 @@ app.post("/signin", function (request, response) {
               //request.cookies = {user: request.body.username}
               //request.session.save(
                 console.log("zxc" + JSON.stringify(request.session))
-                response.send("logged in")
+                response.redirect("/allbooks")
               //)
             }
           })
@@ -230,6 +230,7 @@ app.get("/allbooks", function(request,response){
               })
             })
             //data
+              response.set({headers: {'Set-Cookie': JSON.stringify(request.session)}})
               response.render('allbooks', { data : JSON.stringify(data) });
         })
       }
