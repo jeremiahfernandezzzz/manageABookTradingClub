@@ -121,6 +121,36 @@ app.get("/search", function(request,response){
   } 
 })
 
+/*
+app.post("/search", function(request,response){
+  //console.log(request.body["authors"])
+  MongoClient.connect(url, function(err, db){
+    if (db){
+          var book = {
+            'title' : request.body["title"],
+            'subtitle' : request.body["subtitle"],
+            'thumbnail' : request.body["thumbnail"],
+            'authors' : request.body["authors"], 
+            'user': request.session.user
+          }
+          console.log("book " + JSON.stringify(book));
+          db.collection("bookclub_books").find(book).toArray().then(element => {
+            if (element == "") {
+              db.collection("bookclub_books").insert(book);
+              response.redirect("/mybooks");
+            } else {
+              db.collection("bookclub_books").remove(book);
+              response.redirect("/mybooks");
+              //response.send("username already taken")
+            }
+      })
+    }
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
+})*/
+
 app.post("/search", function(request,response){
   var books = require('google-books-search');
   MongoClient.connect(url, function(err, db){
@@ -181,34 +211,6 @@ app.get("/search", function (request, response) {
   }
 });
 */
-app.post("/search", function(request,response){
-  //console.log(request.body["authors"])
-  MongoClient.connect(url, function(err, db){
-    if (db){
-          var book = {
-            'title' : request.body["title"],
-            'subtitle' : request.body["subtitle"],
-            'thumbnail' : request.body["thumbnail"],
-            'authors' : request.body["authors"], 
-            'user': request.session.user
-          }
-          console.log("book " + JSON.stringify(book));
-          db.collection("bookclub_books").find(book).toArray().then(element => {
-        if (element == "") {
-          db.collection("bookclub_books").insert(book);
-          response.redirect("/mybooks");
-        } else {
-          db.collection("bookclub_books").remove(book);
-          response.redirect("/mybooks");
-          //response.send("username already taken")
-        }
-      })
-    }
-    if (err) {
-     console.log("did not connect to " + url)
-    }
-  })
-})
 
 
 app.get("/allbooks", function(request,response){
@@ -290,7 +292,7 @@ app.post("/allbooks", function(request,response){
      console.log("did not connect to " + url)
     }
   })
-
+    response.redirect("/allbooks")
   //console.log(request.body["authors"])
   /*
   MongoClient.connect(url, function(err, db){
@@ -420,6 +422,7 @@ app.post("/mybooks", function(request,response){
      console.log("did not connect to " + url)
     }
   })
+    response.redirect("/mybooks")
 })
 
 
