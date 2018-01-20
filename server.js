@@ -113,7 +113,7 @@ app.post("/signup", function (request, response) {
 });
 app.set('view engine', 'jade');
 
-app.get("/search", function(request,response){
+app.get("/add", function(request,response){
   //console.log(request.session)
   if (request.session){
     response.sendFile((__dirname + '/views/search.html'))//, {headers: {'Set-Cookie': JSON.stringify(request.session)}});
@@ -121,42 +121,13 @@ app.get("/search", function(request,response){
   } 
 })
 
-/*
-app.post("/search", function(request,response){
-  //console.log(request.body["authors"])
-  MongoClient.connect(url, function(err, db){
-    if (db){
-          var book = {
-            'title' : request.body["title"],
-            'subtitle' : request.body["subtitle"],
-            'thumbnail' : request.body["thumbnail"],
-            'authors' : request.body["authors"], 
-            'user': request.session.user
-          }
-          console.log("book " + JSON.stringify(book));
-          db.collection("bookclub_books").find(book).toArray().then(element => {
-            if (element == "") {
-              db.collection("bookclub_books").insert(book);
-              response.redirect("/mybooks");
-            } else {
-              db.collection("bookclub_books").remove(book);
-              response.redirect("/mybooks");
-              //response.send("username already taken")
-            }
-      })
-    }
-    if (err) {
-     console.log("did not connect to " + url)
-    }
-  })
-})*/
 
-app.post("/search", function(request,response){
+app.get("/search", function(request,response){
   var books = require('google-books-search');
   MongoClient.connect(url, function(err, db){
     if (db){
       db.collection("bookclub_books").find({}).toArray().then(added_books => {
-          books.search(request.body.qwe, function(error, results) {
+          books.search(request.query.qwe, function(error, results) {
             console.log(JSON.stringify(results))
               if ( ! error ) {
                   var data = []
@@ -188,6 +159,38 @@ app.post("/search", function(request,response){
       })
     }
   })
+  
+  
+app.post("/search", function(request,response){
+  console.log("h3h3" + JSON.stringify(request.body))
+
+/*  
+  MongoClient.connect(url, function(err, db){
+    if (db){
+          var book = {
+            'title' : request.body["title"],
+            'subtitle' : request.body["subtitle"],
+            'thumbnail' : request.body["thumbnail"],
+            'authors' : request.body["authors"], 
+            'user': request.session.user
+          }
+          console.log("book " + JSON.stringify(book));
+          db.collection("bookclub_books").find(book).toArray().then(element => {
+            if (element == "") {
+              db.collection("bookclub_books").insert(book);
+              response.redirect("/mybooks");
+            } else {
+              db.collection("bookclub_books").remove(book);
+              response.redirect("/mybooks");
+              //response.send("username already taken")
+            }
+      })
+    }
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })*/
+})
   
   MongoClient.connect(url, function(err, db){
     if (db){
