@@ -245,23 +245,24 @@ app.get("/allbooks", function(request,response){
 })
 
 app.post("/allbooks", function(request,response){
-  
+  console.log()
   MongoClient.connect(url, function(err, db){
     if (db){
         db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
+            console.log(added_books)
             var data = []
             added_books.forEach(function(element){
               var added = false;
                 if (element["user"] == request.session.user){
                   added = true
-                   data.push({
-                    title: element["title"],
-                    subtitle: element["subtitle"],              
-                    authors: element["authors"],
-                    thumbnail: element["thumbnail"],
-                    added: added
-                  })
                 }
+                 data.push({
+                  title: element["title"],
+                  subtitle: element["subtitle"],              
+                  authors: element["authors"],
+                  thumbnail: element["thumbnail"],
+                  added: added
+                })
               })
             //data
               response.render('mybooks', { data : JSON.stringify(data) });
@@ -321,8 +322,8 @@ app.get("/mybooks", function(request,response){
             var data = []
             added_books.forEach(function(element){
               var request = "";
-                if (element["user"] == request.session.user){
-                  request = 
+                if (element["request"]){
+                  request = element["request"]
                    data.push({
                     title: element["title"],
                     subtitle: element["subtitle"],              
