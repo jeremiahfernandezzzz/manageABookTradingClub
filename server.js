@@ -49,7 +49,7 @@ app.get("/signin", function (request, response) {
   if(request.session.user){
     response.redirect("/")
   }else{
-    response.sendFile(__dirname + '/views/signin.html');
+    response.sendFile((__dirname + '/views/signin.html'), {headers: {'Set-Cookie': JSON.stringify(request.session)}});
   }
 });
 
