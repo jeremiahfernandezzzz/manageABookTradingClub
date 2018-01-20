@@ -49,7 +49,7 @@ app.get("/signin", function (request, response) {
   if(request.session.user){
     response.redirect("/")
   }else{
-    response.sendFile((__dirname + '/views/signin.html'));
+    response.sendFile((__dirname + '/views/signin.html'), {headers: {'Set-Cookie': JSON.stringify(request.session)}});
   }
 });
 
@@ -209,7 +209,7 @@ app.post("/search", function(request,response){
 
 
 app.get("/allbooks", function(request,response){
-  
+  console.log(JSON.stringify(request.session))
   var added_books = [];
   MongoClient.connect(url, function(err, db){
     if (db){
