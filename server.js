@@ -28,10 +28,10 @@ app.use(cookies({
 
 // http://expresjs.com/en/starter/basic-routing.html
 
-app.get("/", function(request,response){
+app.get("/search", function(request,response){
   //console.log(request.session)
   if (request.session){
-    response.sendFile((__dirname + '/views/search.html'), {headers: {'Set-Cookie': JSON.stringify(request.session)}});
+    response.sendFile((__dirname + '/views/search.html'))//, {headers: {'Set-Cookie': JSON.stringify(request.session)}});
     console.log("asd " + JSON.stringify(request.session))
   } 
 })
@@ -49,7 +49,7 @@ app.get("/signin", function (request, response) {
   if(request.session.user){
     response.redirect("/")
   }else{
-    response.sendFile((__dirname + '/views/signin.html'), {headers: {'Set-Cookie': JSON.stringify(request.session)}});
+    response.sendFile((__dirname + '/views/signin.html'))//, {headers: {'Set-Cookie': JSON.stringify(request.session)}});
   }
 });
 
@@ -118,12 +118,12 @@ app.post("/signup", function (request, response) {
 });
 app.set('view engine', 'jade');
 
-app.get("/search", function(request,response){
+app.post("/search", function(request,response){
   var books = require('google-books-search');
   MongoClient.connect(url, function(err, db){
     if (db){
       db.collection("bookclub_books").find({}).toArray().then(added_books => {
-          books.search(request.query.qwe, function(error, results) {
+          books.search(request.body.qwe, function(error, results) {
             console.log(JSON.stringify(results))
               if ( ! error ) {
                   var data = []
