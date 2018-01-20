@@ -246,7 +246,34 @@ app.get("/allbooks", function(request,response){
 
 app.post("/allbooks", function(request,response){
   
+  MongoClient.connect(url, function(err, db){
+    if (db){
+        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
+            var data = []
+            added_books.forEach(function(element){
+              var added = false;
+                if (element["user"] == request.session.user){
+                  added = true
+                   data.push({
+                    title: element["title"],
+                    subtitle: element["subtitle"],              
+                    authors: element["authors"],
+                    thumbnail: element["thumbnail"],
+                    added: added
+                  })
+                }
+              })
+            //data
+              response.render('mybooks', { data : JSON.stringify(data) });
+          });
+      }
+    
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
   //console.log(request.body["authors"])
+  /*
   MongoClient.connect(url, function(err, db){
     if (db){
           var book = {
@@ -281,26 +308,27 @@ app.post("/allbooks", function(request,response){
      console.log("did not connect to " + url)
     }
   })
+  */
 })
 
 
 
 app.get("/mybooks", function(request,response){
-  var added_books = [];
+    
   MongoClient.connect(url, function(err, db){
     if (db){
-        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
+        db.collection("bookclub_books").find({user: request.session.user},{_id:0}).toArray().then(added_books => {
             var data = []
             added_books.forEach(function(element){
-              var added = false;
+              var request = "";
                 if (element["user"] == request.session.user){
-                  added = true
+                  request = 
                    data.push({
                     title: element["title"],
                     subtitle: element["subtitle"],              
                     authors: element["authors"],
                     thumbnail: element["thumbnail"],
-                    added: added
+                    request: request
                   })
                 }
               })
@@ -313,6 +341,7 @@ app.get("/mybooks", function(request,response){
      console.log("did not connect to " + url)
     }
   })
+  
 })
 
 app.get("/requests", function(request,response){
@@ -329,9 +358,7 @@ app.get("/requests", function(request,response){
                     subtitle: element["subtitle"],              
                     authors: element["authors"],
                     thumbnail: element["thumbnail"],
-                    user: element["user"],
-                    request: element["request"]
-                     
+                    added: added
                   })
                 }
               })
