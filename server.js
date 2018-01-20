@@ -30,10 +30,10 @@ app.use(cookies({
 
 app.get("/", function(request,response){
   //console.log(request.session)
-    if (!request.session){
+  if (request.session){
     response.sendFile((__dirname + '/views/search.html'), {headers: {'Set-Cookie': JSON.stringify(request.session)}});
     console.log("asd " + JSON.stringify(request.session))
-  }
+  } 
 })
 
 app.post("/", function(request,response){
@@ -70,7 +70,7 @@ app.post("/signin", function (request, response) {
               //request.cookies = {user: request.body.username}
               //request.session.save(
                 console.log("zxc" + JSON.stringify(request.session))
-                //response.redirect("/")
+                response.redirect("/")
               //)
             }
           })
@@ -177,8 +177,8 @@ app.get("/search", function (request, response) {
     console.log("asd " + JSON.stringify(request.session))
   }
 });
-
-app.post("/search2", function(request,response){
+*/
+app.post("/search", function(request,response){
   //console.log(request.body["authors"])
   MongoClient.connect(url, function(err, db){
     if (db){
@@ -207,7 +207,7 @@ app.post("/search2", function(request,response){
   })
 })
 
-*/
+
 app.get("/allbooks", function(request,response){
   
   var added_books = [];
