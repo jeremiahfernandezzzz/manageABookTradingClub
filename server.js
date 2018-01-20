@@ -324,6 +324,7 @@ app.get("/mybooks", function(request,response){
               var request = "";
                 if (element["request"]){
                   request = element["request"]
+                }
                    data.push({
                     title: element["title"],
                     subtitle: element["subtitle"],              
@@ -331,7 +332,6 @@ app.get("/mybooks", function(request,response){
                     thumbnail: element["thumbnail"],
                     request: request
                   })
-                }
               })
             //data
               response.render('mybooks', { data : JSON.stringify(data) });
@@ -345,13 +345,14 @@ app.get("/mybooks", function(request,response){
   
 })
 
+/*
 app.get("/requests", function(request,response){
   MongoClient.connect(url, function(err, db){
     if (db){
         db.collection("bookclub_books").find({user: request.session.user},{_id:0}).toArray().then(added_books => {
             var data = []
             added_books.forEach(function(element){
-              var added = false;
+              var added = false
                 if (element["user"] == request.session.user){
                   added = true
                    data.push({
@@ -374,8 +375,9 @@ app.get("/requests", function(request,response){
     }
   })
 })
+*/
 
-app.post("/requests", function(request,response){
+app.post("/mybooks", function(request,response){
   console.log(request.body)
   var book = {
     'title' : request.body["title"],
