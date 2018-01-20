@@ -72,7 +72,6 @@ app.post("/signin", function (request, response) {
               //request.cookies = {user: request.body.username}
               //request.session.save(
                 console.log("zxc" + JSON.stringify(request.session))
-              response.setHeader('Set-Cookie',JSON.stringify(request.session))
                 response.redirect("/allbooks")
               //)
             }
@@ -234,6 +233,7 @@ app.get("/allbooks", function(request,response){
             })
             //data
               //response.set({headers: {'Set-Cookie': JSON.stringify(request.session)}})
+              response.setHeader('Set-Cookie',JSON.stringify(request.session))
               response.render('allbooks', { data : JSON.stringify(data) });
         })
       }
