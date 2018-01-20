@@ -364,8 +364,8 @@ app.post("/requests", function(request,response){
         'thumbnail' : request.body["thumbnail"],
         'authors' : request.body["authors"], 
         'user': request.body["request"],
-        'request': null
       });
+      db.collection("bookclub_books").update(book, {$unset: {request:1}})
     }
     if (err) {
      console.log("did not connect to " + url)
