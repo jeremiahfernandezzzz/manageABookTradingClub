@@ -265,7 +265,7 @@ app.post("/allbooks", function(request,response){
                 })
               })
             //data
-              response.render('mybooks', { data : JSON.stringify(data) });
+              response.render('allbooks', { data : JSON.stringify(data) });
           });
       }
     
@@ -330,6 +330,7 @@ app.get("/mybooks", function(request,response){
                     subtitle: element["subtitle"],              
                     authors: element["authors"],
                     thumbnail: element["thumbnail"],
+                    user: element["user"],
                     request: request
                   })
               })
