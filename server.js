@@ -43,7 +43,7 @@ app.get("/", function(request,response){
 app.get("/signout", function (request, response) {
   request.session = null
   console.log(request.session)
-  response.setHeader('Set-Cookie',JSON.stringify(request.session))
+  //response.setHeader('Set-Cookie',JSON.stringify(request.session))
   response.redirect("/")
 })
 
@@ -215,7 +215,7 @@ app.get("/allbooks", function(request,response){
   var added_books = [];
   MongoClient.connect(url, function(err, db){
     if (db){
-        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
+        db.collection("bookclub_books").find({request: {$exists:false}},{_id:0}).toArray().then(added_books => {
             var data = []
             added_books.forEach(function(element){
               var added = false;
@@ -337,6 +337,7 @@ app.get("/requests", function(request,response){
               })
             //data
               response.render('requests', { data : JSON.stringify(data) });
+              response.redirect("/");
           });
       }
     
