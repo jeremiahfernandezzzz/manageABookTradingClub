@@ -221,7 +221,7 @@ app.get("/allbooks", function(request,response){
   //var added_books = [];
   MongoClient.connect(url, function(err, db){
     if (db){
-        db.collection("bookclub_books").find({},{request: {$exists:false}}).toArray().then(added_books => {
+        db.collection("bookclub_books").find({request: {$exists:false}}).toArray().then(added_books => {
             var data = []
             added_books.forEach(function(element){
               var added = false;
