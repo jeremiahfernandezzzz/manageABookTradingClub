@@ -123,42 +123,48 @@ app.get("/add", function(request,response){
 
 
 app.get("/search", function(request,response){
-  var books = require('google-books-search');
-  MongoClient.connect(url, function(err, db){
-    if (db){
-      db.collection("bookclub_books").find({}).toArray().then(added_books => {
-          books.search(request.query.qwe, function(error, results) {
-            console.log(JSON.stringify(results))
-              if ( ! error ) {
-                  var data = []
-                  console.log("zxczxczx" + results)
-                  results.forEach(function(element){
-                    var added = false;
-                    added_books.forEach(function(added_book){
-                      if (added_book["title"] == element["title"]){
-                        if (added_book["user"] == request.session.user){
-                          added = true
+  console.log(!request.query)
+  if(request.query){
+    var books = require('google-books-search');
+    MongoClient.connect(url, function(err, db){
+      if (db){
+        db.collection("bookclub_books").find({}).toArray().then(added_books => {
+            books.search(request.query.qwe, function(error, results) {
+              console.log(JSON.stringify(results))
+                if ( ! error ) {
+                    var data = []
+                    console.log("zxczxczx" + results)
+                    results.forEach(function(element){
+                      var added = false;
+                      added_books.forEach(function(added_book){
+                        if (added_book["title"] == element["title"]){
+                          if (added_book["user"] == request.session.user){
+                            added = true
+                          }
                         }
-                      }
+                      })
+                      data.push({
+                        title: element["title"],
+                        subtitle: element["subtitle"],              
+                        authors: element["authors"],
+                        thumbnail: element["thumbnail"],
+                        added: added
+                      })
+                      //console.log(data)
                     })
-                    data.push({
-                      title: element["title"],
-                      subtitle: element["subtitle"],              
-                      authors: element["authors"],
-                      thumbnail: element["thumbnail"],
-                      added: added
-                    })
-                    //console.log(data)
-                  })
-                  
-                  response.render('search', { data : JSON.stringify(data) });
-              } else {
-                  console.log(error);
-              }
-          });
-      })
-    }
-  })
+
+                    response.render('search', { data : JSON.stringify(data) });
+                } else {
+                    console.log(error);
+                }
+            });
+        })
+      }
+    })
+  }else {
+    response.redirect("/allbooks")
+  }
+})
   
   
 app.post("/search", function(request,response){
@@ -188,17 +194,6 @@ app.post("/search", function(request,response){
   })
 })
   
-  MongoClient.connect(url, function(err, db){
-    if (db){
-        db.collection("bookclub_books").find({},{_id:0}).toArray().then(added_books => {
-          
-      })
-    }
-    if (err) {
-     console.log("did not connect to " + url)
-    }
-  })
-})
 
 /*
 

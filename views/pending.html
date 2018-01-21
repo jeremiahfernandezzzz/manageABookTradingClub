@@ -52,6 +52,44 @@
     document.querySelector("#search").innerHTML = "pending requests, " + JSON.parse(document.cookie).user
     document.querySelector("#signIn").innerHTML = "Sign Out"
     document.querySelector("#signIn").setAttribute("href", "/signout")
+    
+    
+    var mybooks = document.createElement("a");
+    mybooks.setAttribute("class", "button special");
+    mybooks.innerHTML = "My Books";
+    mybooks.setAttribute("href", "/mybooks");
+    
+    var allbooks = document.createElement("a");
+    allbooks.setAttribute("class", "button special");
+    allbooks.innerHTML = "All Books";
+    allbooks.setAttribute("href", "/allbooks");
+    
+    var add = document.createElement("a");
+    add.setAttribute("class", "button special");
+    add.innerHTML = "Add Book";
+    add.setAttribute("href", "/add");
+    
+    var pending = document.createElement("a");
+    pending.setAttribute("class", "button special");
+    pending.innerHTML = "Pending";
+    pending.setAttribute("href", "/pending");
+    
+    var li = document.createElement("li");
+    var lili = document.createElement("li");
+    var lilili = document.createElement("li");
+    var lililili = document.createElement("li");
+    
+    lililili.append(pending);
+    document.querySelector("#asd").append(lililili);
+    
+    lilili.append(allbooks);
+    document.querySelector("#asd").append(lilili);
+    
+    lili.append(add);
+    document.querySelector("#asd").append(lili);
+    
+    li.append(mybooks);
+    document.querySelector("#asd").append(li);
   }else {
     
     var signup = document.createElement("a");
