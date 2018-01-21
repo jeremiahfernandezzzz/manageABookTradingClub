@@ -71,13 +71,23 @@
     
     var pending = document.createElement("a");
     pending.setAttribute("class", "button special");
-    pending.innerHTML = "Pending";
+    pending.innerHTML = "Sent Requests";
     pending.setAttribute("href", "/pending");
+    
+        
+    var settings = document.createElement("a");
+    settings.setAttribute("class", "button special");
+    settings.innerHTML = "Settings";
+    settings.setAttribute("href", "/settings");
     
     var li = document.createElement("li");
     var lili = document.createElement("li");
     var lilili = document.createElement("li");
     var lililili = document.createElement("li");
+    var lilililili = document.createElement("li");
+    
+    lilililili.append(settings);
+    document.querySelector("#asd").append(lilililili);
     
     lililili.append(pending);
     document.querySelector("#asd").append(lililili);

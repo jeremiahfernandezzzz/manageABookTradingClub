@@ -474,6 +474,25 @@ app.post("/pending", function (request, response) {
   response.redirect("/pending")
 });
 
+
+app.get("/settings", function (request, response) {
+    MongoClient.connect(url, function(err, db){
+    if (db){
+     db.collection("bookclub_users").find({'username' : request.session.user}).toArray().then(user => {
+              var data = user
+              //data
+                console.log(user)
+                response.render('settings', { data : JSON.stringify(data) });
+            });
+    }
+    
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
+  //response.render('settings', { data : JSON.stringify(data) });
+});
+
 app.get("/dreams", function (request, response) {
   response.send(dreams);
 });
