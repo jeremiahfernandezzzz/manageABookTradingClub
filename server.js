@@ -116,7 +116,7 @@ app.set('view engine', 'jade');
 app.get("/add", function(request,response){
   //console.log(request.session)
   if (request.session){
-    response.sendFile((__dirname + '/views/add.html'))//, {headers: {'Set-Cookie': JSON.stringify(request.session)}});
+    response.sendFile((__dirname + '/views/search.html'))//, {headers: {'Set-Cookie': JSON.stringify(request.session)}});
     console.log("asd " + JSON.stringify(request.session))
   } 
 })
