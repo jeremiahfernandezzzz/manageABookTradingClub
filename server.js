@@ -428,6 +428,30 @@ app.post("/mybooks", function(request,response){
     response.redirect("/mybooks")
 })
 
+app.get("/pending", function (request, response) {
+  MongoClient.connect(url, function(err, db){
+    if (db){
+        db.collection("bookclub_books").find({request: request.session.user},{_id:0}).toArray().then(added_books => {
+            var data = []
+            added_books.forEach(function(element){
+                   data.push({
+                    title: element["title"],
+                    subtitle: element["subtitle"],              
+                    authors: element["authors"],
+                    thumbnail: element["thumbnail"],
+                    user: element["user"]
+                  })
+              })
+            //data
+              response.render('pending', { data : JSON.stringify(data) });
+          });
+      }
+    
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
+});
 
 app.get("/dreams", function (request, response) {
   response.send(dreams);
