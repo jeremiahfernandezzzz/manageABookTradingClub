@@ -498,7 +498,13 @@ app.post("/settings", function (request, response) {
   
     MongoClient.connect(url, function(err, db){
     if (db){
-     db.collection("bookclub_users").update({"username": request.session.user}, request.body)
+      db.collection("bookclub_users").find({"username": request.body.username}).toArray().then(user => {
+        if (user = ""){
+           db.collection("bookclub_users").update({"username": request.session.user}, request.body)
+        } else {
+          response.send("username already in use")
+        }
+      })
     }
     
     if (err) {
