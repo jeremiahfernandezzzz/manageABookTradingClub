@@ -439,7 +439,8 @@ app.get("/pending", function (request, response) {
                     subtitle: element["subtitle"],              
                     authors: element["authors"],
                     thumbnail: element["thumbnail"],
-                    user: element["user"]
+                    user: element["user"],
+                    request: element["request"]
                   })
               })
             //data
@@ -451,6 +452,29 @@ app.get("/pending", function (request, response) {
      console.log("did not connect to " + url)
     }
   })
+});
+
+app.post("/pending", function (request, response) {
+  console.log(JSON.stringify(request.body))
+  
+  MongoClient.connect(url, function(err, db){
+    var book = {
+    'title' : request.body["title"],
+    'subtitle' : request.body["subtitle"],
+    'thumbnail' : request.body["thumbnail"],
+    'authors' : request.body["authors"], 
+    'user': request.body["user"],
+    'request': request.body["request"]
+  }
+    if (db){
+     db.collection("bookclub_books").update(book, {$unset: {request:1}})
+    }
+    
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
+  response.redirect("/pending")
 });
 
 app.get("/dreams", function (request, response) {
