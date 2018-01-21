@@ -116,7 +116,7 @@ app.set('view engine', 'jade');
 app.get("/add", function(request,response){
   //console.log(request.session)
   if (request.session){
-    response.sendFile((__dirname + '/views/search.html'))//, {headers: {'Set-Cookie': JSON.stringify(request.session)}});
+    response.sendFile((__dirname + '/views/add.html'))//, {headers: {'Set-Cookie': JSON.stringify(request.session)}});
     console.log("asd " + JSON.stringify(request.session))
   } 
 })
@@ -179,10 +179,6 @@ app.post("/search", function(request,response){
             if (element == "") {
               db.collection("bookclub_books").insert(book);
               response.redirect("/mybooks");
-            } else {
-              db.collection("bookclub_books").remove(book);
-              response.redirect("/mybooks");
-              //response.send("username already taken")
             }
       })
     }
@@ -217,7 +213,7 @@ app.get("/search", function (request, response) {
 
 
 app.get("/allbooks", function(request,response){
-  console.log("fucktard" + JSON.stringify(request.session))
+  console.log("ayy" + JSON.stringify(request.session))
   //var added_books = [];
   MongoClient.connect(url, function(err, db){
     if (db){
