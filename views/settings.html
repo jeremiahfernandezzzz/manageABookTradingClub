@@ -36,7 +36,7 @@
 			<section id="three" class="wrapper style3 special">
 				<div class="container">
 					<header class="major">
-						<h2>register</h2>
+						<h2>edit info</h2>
 					</header>
 				</div>
 				<div class="container 50%">
@@ -68,4 +68,68 @@
 </html>
 
 <script>
+  if(JSON.parse(document.cookie).user){
+    document.querySelector("#search").innerHTML = "<span style='color:#EFF7BE'>got a new book, " + JSON.parse(document.cookie).user + "</span>?"
+    document.querySelector("#signIn").innerHTML = "Sign Out"
+    document.querySelector("#signIn").setAttribute("href", "/signout")
+    
+    
+    var mybooks = document.createElement("a");
+    mybooks.setAttribute("class", "button special");
+    mybooks.innerHTML = "Received Requests";
+    mybooks.setAttribute("href", "/mybooks");
+    
+    var allbooks = document.createElement("a");
+    allbooks.setAttribute("class", "button special");
+    allbooks.innerHTML = "All Books";
+    allbooks.setAttribute("href", "/allbooks");
+    
+    var add = document.createElement("a");
+    add.setAttribute("class", "button special");
+    add.innerHTML = "Add Book";
+    add.setAttribute("href", "/add");
+    
+    var pending = document.createElement("a");
+    pending.setAttribute("class", "button special");
+    pending.innerHTML = "Sent Requests";
+    pending.setAttribute("href", "/pending");
+    
+    
+    var settings = document.createElement("a");
+    settings.setAttribute("class", "button special");
+    settings.innerHTML = "Settings";
+    settings.setAttribute("href", "/settings");
+    
+    var li = document.createElement("li");
+    var lili = document.createElement("li");
+    var lilili = document.createElement("li");
+    var lililili = document.createElement("li");
+    var lilililili = document.createElement("li");
+    
+    lilililili.append(settings);
+    document.querySelector("#asd").append(lilililili);
+    
+    lililili.append(pending);
+    document.querySelector("#asd").append(lililili);
+    
+    lilili.append(allbooks);
+    document.querySelector("#asd").append(lilili);
+    
+    lili.append(add);
+    document.querySelector("#asd").append(lili);
+    
+    li.append(mybooks);
+    document.querySelector("#asd").append(li);
+  }else {
+    
+    var signup = document.createElement("a");
+    signup.setAttribute("id", "signup");
+    signup.setAttribute("class", "button special");
+    signup.innerHTML = "Sign Up";
+    signup.setAttribute("href", "/signup");
+    
+    var li = document.createElement("li");
+    li.append(signup);
+    document.querySelector("#asd").append(li);
+  }
 </script>

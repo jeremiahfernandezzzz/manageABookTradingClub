@@ -493,6 +493,21 @@ app.get("/settings", function (request, response) {
   //response.render('settings', { data : JSON.stringify(data) });
 });
 
+app.post("/settings", function (request, response) {
+  console.log(request.body)  
+  
+    MongoClient.connect(url, function(err, db){
+    if (db){
+     db.collection("bookclub_users").update({"username": request.session.user}, request.body)
+    }
+    
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
+  //response.render('settings', { data : JSON.stringify(data) });
+});
+
 app.get("/dreams", function (request, response) {
   response.send(dreams);
 });
