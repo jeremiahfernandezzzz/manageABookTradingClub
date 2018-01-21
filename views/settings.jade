@@ -2,4 +2,8 @@ include settings.html
 body
 script.
     var results = !{data}
+    document.querySelector("#username").value = results[0].username
+    document.querySelector("#password").value = results[0].password
+    document.querySelector("#location").value = results[0].location
+    document.querySelector("#name").value = results[0].name
     

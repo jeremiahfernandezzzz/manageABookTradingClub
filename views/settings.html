@@ -43,16 +43,16 @@
 					<form action="/settings" method="post">
 						<div class="row uniform">
 							<div class="6u 12u$(small)">
-								<input name="username" value="" placeholder="username" type="text">
+								<input id="username" name="username" value="" placeholder="username" type="text">
 							</div>
               <div class="6u 12u$(small)">
-								<input name="password" value="" placeholder="password" type="password">
+								<input id="password" name="password" value="" placeholder="password" type="password">
 							</div>
 							<div class="12u$">
-								<textarea name="name" placeholder="name" rows="1"></textarea>
+								<textarea id="name" name="name" placeholder="name" rows="1"></textarea>
 							</div>
               <div class="12u$">
-								<textarea name="location" placeholder="location" rows="2"></textarea>
+								<textarea id="location" name="location" placeholder="location" rows="2"></textarea>
 							</div>
 							<div class="12u$">
 								<ul class="actions">
@@ -68,5 +68,4 @@
 </html>
 
 <script>
-    document.querySelector("[name=username]").value = "asd"
 </script>
