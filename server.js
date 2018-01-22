@@ -495,16 +495,23 @@ app.get("/settings", function (request, response) {
 
 app.post("/settings", function (request, response) {
   console.log(request.body)  
-  
     MongoClient.connect(url, function(err, db){
     if (db){
-      db.collection("bookclub_users").find({"username": request.body.username}).toArray().then(user => {
-        if (user = ""){
-           db.collection("bookclub_users").update({"username": request.session.user}, request.body)
-        } else {
-          response.send("username already in use")
-        }
-      })
+      if (request.body.username != request.session.user){  
+        db.collection("bookclub_users").find({"username": request.body.username}).toArray().then(user => {
+        
+          if (user = ""){
+            //if (request.body.username != request.session.user){  
+             db.collection("bookclub_users").update({"username": request.session.user}, request.body)
+            //}
+          } else {
+            response.send("username already in use")
+          }
+
+        })
+      } else {
+        db.collection("bookclub_users").update({"username": request.session.user}, request.body)
+      }
     }
     
     if (err) {
