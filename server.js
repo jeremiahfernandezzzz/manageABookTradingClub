@@ -476,20 +476,24 @@ app.post("/pending", function (request, response) {
 
 
 app.get("/settings", function (request, response) {
-    MongoClient.connect(url, function(err, db){
-    if (db){
-     db.collection("bookclub_users").find({'username' : request.session.user}).toArray().then(user => {
-              var data = user
-              //data
-                console.log(user)
-                response.render('settings', { data : JSON.stringify(data) });
-            });
-    }
-    
-    if (err) {
-     console.log("did not connect to " + url)
-    }
-  })
+  if(request.session.user){
+      MongoClient.connect(url, function(err, db){
+      if (db){
+       db.collection("bookclub_users").find({'username' : request.session.user}).toArray().then(user => {
+                var data = user
+                //data
+                  console.log(user)
+                  response.render('settings', { data : JSON.stringify(data) });
+              });
+      }
+
+      if (err) {
+       console.log("did not connect to " + url)
+      }
+    })
+  } else {
+    response.redirect("/allbooks")        
+  }
   //response.render('settings', { data : JSON.stringify(data) });
 });
 
