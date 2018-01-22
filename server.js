@@ -499,8 +499,8 @@ app.post("/settings", function (request, response) {
     if (db){
       if (request.body.username != request.session.user){  
         db.collection("bookclub_users").find({"username": request.body.username}).toArray().then(user => {
-          console.log("hahaha" + JSON.stringify(user))
-          if (user.username){
+          
+          if (JSON.stringify(user[0].username)){
             response.send("username already in use")
             //if (request.body.username != request.session.user){  
             //}
@@ -509,6 +509,7 @@ app.post("/settings", function (request, response) {
              //request.session.user = request.body.username
               //response.setHeader('Set-Cookie',JSON.stringify(request.session))
             //response.redirect("/allbooks")
+            response.send("yeah")
           }
 
         })
