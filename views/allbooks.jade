@@ -10,28 +10,29 @@ script.
     //var header = document.createElement("h2");
     header.setAttribute("style", "color: white");
     //var title = document.createTextNode(element["title"]);
-    var title = document.createElement("h2");
+    var title = document.createElement("div");
     title.innerHTML = element["title"]
-    title.setAttribute("style", "c")
+    title.setAttribute("style", "color:white")
     //var subtitle = document.createTextNode(element["subtitle"]);
-    var authors = document.createTextNode(element["authors"]);
+    var authors = document.createElement("span");
+    authors.innerHTML = element["authors"]
+    authors.setAttribute("style", 'color:#EFF7BE')
     //var user = document.createTextNode("posted by <span style='color:#EFF7BE'>" + element["user"] + "</span>");
     var user = document.createElement("span")
-    user.setAttribute("style", 'color:#EFF7BE')
-    user.innerHTML = element["user"] 
+    user.innerHTML = "posted by " + element["user"] 
     //var text = document.createTextNode("blahblahblah");
 
     image.setAttribute("src", element["thumbnail"]);
     image.setAttribute("style", "position:relative;height:150px;float:left;padding:10px;")
 
     //header.append(title);
+    result.append(image);
     result.append(title);
     result.append(authors);
     result.append(document.createElement("br"))
     result.append(user);
     //result.append(subtitle);
     //result.append(text);
-    result.append(image);
     
     //document.cookie
     
