@@ -7,9 +7,12 @@ script.
     var result = document.createElement("div");
     result.setAttribute("style", "float:left; border: medium dashed gray; margin: 5px;padding: 10px; color: white");
     var image = document.createElement("img");
-    var header = document.createElement("h2");
+    //var header = document.createElement("h2");
     header.setAttribute("style", "color: white");
-    var title = document.createTextNode(element["title"]);
+    //var title = document.createTextNode(element["title"]);
+    var title = document.createElement("h2");
+    title.innerHTML = element["title"]
+    title.setAttribute("style", "c")
     //var subtitle = document.createTextNode(element["subtitle"]);
     var authors = document.createTextNode(element["authors"]);
     //var user = document.createTextNode("posted by <span style='color:#EFF7BE'>" + element["user"] + "</span>");
@@ -21,8 +24,8 @@ script.
     image.setAttribute("src", element["thumbnail"]);
     image.setAttribute("style", "position:relative;height:150px;float:left;padding:10px;")
 
-    header.append(title);
-    result.append(header);
+    //header.append(title);
+    result.append(title);
     result.append(authors);
     result.append(document.createElement("br"))
     result.append(user);
