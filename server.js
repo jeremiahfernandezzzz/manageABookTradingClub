@@ -499,18 +499,22 @@ app.post("/settings", function (request, response) {
     if (db){
       if (request.body.username != request.session.user){  
         db.collection("bookclub_users").find({"username": request.body.username}).toArray().then(user => {
-          console.log(user.username)
+          console.log("hahaha" + user.username)
           if (user.username){
             response.send("username already in use")
             //if (request.body.username != request.session.user){  
             //}
           } else {
              db.collection("bookclub_users").update({"username": request.session.user}, request.body)
+             request.session.user = request.body.username
+              response.setHeader('Set-Cookie',JSON.stringify(request.session))
+            response.redirect("/allbooks")
           }
 
         })
       } else {
         db.collection("bookclub_users").update({"username": request.session.user}, request.body)
+        response.redirect("/allbooks")
       }
     }
     
