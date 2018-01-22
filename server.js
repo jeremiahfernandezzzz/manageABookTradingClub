@@ -100,7 +100,7 @@ app.post("/signup", function (request, response) {
             name: request.body.name,
           }
           db.collection("bookclub_users").insert(user);
-          response.redirect("/");
+          response.redirect("/signin");
         } else {
           response.send("username already taken")
         }
