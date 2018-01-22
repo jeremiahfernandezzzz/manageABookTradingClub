@@ -37,7 +37,7 @@
 			<section id="one" class="wrapper style3 special">
 				<div class="container 50%">
 					<header class="major">
-						<h2 id="search">look a book up</h2>
+						<h2 id="search">all books</h2>
             
 					</header>
 				</div>
@@ -49,7 +49,7 @@
 
 <script>
   if(JSON.parse(document.cookie).user){
-    document.querySelector("#search").innerHTML = "trade a book, " + JSON.parse(document.cookie).user
+    document.querySelector("#search").innerHTML = "all books"
     document.querySelector("#signIn").innerHTML = "Sign Out"
     document.querySelector("#signIn").setAttribute("href", "/signout")
     
