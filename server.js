@@ -499,7 +499,7 @@ app.post("/settings", function (request, response) {
     if (db){
       if (request.body.username != request.session.user){  
         db.collection("bookclub_users").find({"username": request.body.username}).toArray().then(user => {
-          console.log("hahaha" + user.username)
+          console.log("hahaha" + user)
           if (user.username){
             response.send("username already in use")
             //if (request.body.username != request.session.user){  
